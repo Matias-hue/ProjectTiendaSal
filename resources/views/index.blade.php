@@ -1,10 +1,6 @@
+@include('layouts.header') 
 
-
-@section('content')
-    @include('layouts.header') 
-
-    <div class="py-4 px-8 text-sm text-gray-500">Inicio</div>
-
+<div class="py-4 px-8 text-sm text-gray-500">Inicio</div>
     <main class="px-8">
         <div class="bg-white p-10 rounded-lg shadow-lg mb-8 text-xl">
             <h2 class="text-3xl font-bold mb-6">Sobre Nosotros</h2>
@@ -19,5 +15,4 @@
             <blockquote class="italic text-gray-600 mt-4">“Realza el sabor de tus comidas con el toque perfecto de nuestra sal.”</blockquote>
         </div>
     </main>
-
-    @include('layouts.footer')
+@include('layouts.footer')
