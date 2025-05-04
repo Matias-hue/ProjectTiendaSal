@@ -219,10 +219,23 @@ header, footer {
 }
 
 /* Contacto */
-.container-contacto > div {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+.container-contacto {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 20px; 
+}
+
+.cuadro-contacto {
+    width: 100%; 
+    max-width: 275px; 
+    margin-top: 20px; 
+    border: 1px solid #4A5568; 
+    border-radius: 0.5rem; 
+    padding: 20px; 
+    background-color: #ffffff; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px; 
 }
 
 .card-body-contacto {
@@ -232,11 +245,38 @@ header, footer {
 }
 
 .form-control-contacto {
-    border: 2px solid #4A5568;
+    border: 0.175rem solid #4A5568;
+    border-radius: 0.5rem; 
+    padding: 0.5rem;
+    width: 100%; 
 }
 
 .form-control-contacto:focus {
     border-color: #2D3748;
+    outline: none; 
+}
+
+.cajas-contacto {
+    margin-bottom: 1rem; 
+    width: 100%;
+}
+
+.btn-enviar-mensaje-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.btn-enviar-mensaje {
+    width: 100%; 
+    border: 2px solid #2D3748;
+    border-color: #2D3748;
+    background-color: #f2f2f2;  
+    padding: 4px;
+    margin: 0 10px;
+    text-align: center;
 }
 
 /* Mapa 
