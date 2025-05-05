@@ -1,3 +1,5 @@
+@extends('layouts.app')
+@section('content')
 @include('layouts.header')
 <!DOCTYPE html>
 <html lang="es">
@@ -34,3 +36,4 @@
 </main>
 </html>
 @include('layouts.footer')
+@endsection

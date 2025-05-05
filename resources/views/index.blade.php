@@ -1,3 +1,5 @@
+@extends('layouts.app')
+@section('content')
 @include('layouts.header') 
 
 <div class="py-4 px-8 text-sm text-gray-500">Inicio</div>
@@ -16,3 +18,4 @@
         </div>
     </main>
 @include('layouts.footer')
+@endsection

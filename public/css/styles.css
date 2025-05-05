@@ -2,13 +2,25 @@
 html, body {
     height: 100%;
     margin: 0;   
+    padding: 0;
     font-family: 'Roboto', sans-serif;
     display: flex;
     flex-direction: column;
 }
 
+#app {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
 main {
-    flex: 1;    
+    min-height: 50vh;
+    flex-grow: 1;    
     margin-bottom: 2rem;
 }
 
@@ -20,6 +32,8 @@ header, footer {
 
 .header {
     border-bottom: 2px solid #d1d5db; 
+    margin: 0;
+    padding: 0;
 }
 
 .header .nav {
@@ -62,6 +76,9 @@ header, footer {
 /* Estilos del footer */
 .footer {
     border-top: 2px solid #d1d5db;
+    padding: 1rem 2rem; 
+    position: relative;
+    width: 100%; 
 }
 
 .footer-content {
@@ -126,6 +143,46 @@ header, footer {
 
 .social-icon-2:hover {
     background-color: #b949aa; 
+}
+
+/* Dashboard */
+.dashboard-sidebar {
+    width: 16rem; 
+    background-color: #f3f4f6; 
+    padding: 1.5rem; 
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
+    border-right: 2px solid #d1d5db;
+}
+
+.dashboard-content {
+    margin-top: 12rem;
+}
+
+.dashboard-sidebar h2 {
+    font-size: 1.5rem; 
+    font-weight: bold; 
+    margin-bottom: 1.5rem; 
+}
+
+.dashboard-sidebar ul {
+    list-style-type: none; 
+    padding: 0; 
+}
+
+.dashboard-sidebar a {
+    display: block; 
+    padding: 0.5rem 0; 
+    color: #4a5568; 
+    text-decoration: none; 
+    transition: color 0.3s; 
+}
+
+.dashboard-sidebar a:hover {
+    color: #3182ce; 
+}
+
+.dashboard-sidebar li {
+    margin-bottom: 0.5rem; 
 }
 
 /* Productos */
@@ -277,6 +334,10 @@ header, footer {
     padding: 4px;
     margin: 0 10px;
     text-align: center;
+}
+
+.btn-enviar-mensaje-1 {
+    width: 100%;
 }
 
 /* Mapa 

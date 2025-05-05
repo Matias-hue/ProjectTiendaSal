@@ -1,3 +1,5 @@
+@extends('layouts.app')
+@section('content')
 @include('layouts.header')
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +47,7 @@
 
                     <div class="btn-enviar-mensaje-div">
                         <div class="btn-enviar-mensaje">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn-enviar-mensaje-1">
                                 {{ __('Enviar') }}
                             </button>
                         </div>
@@ -57,3 +59,4 @@
     @include('layouts.footer')
 </body>
 </html>
+@endsection

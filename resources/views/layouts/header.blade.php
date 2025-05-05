@@ -49,11 +49,6 @@
             <a class="text-gray-700 hover:text-blue-900" href="{{ route('productos') }}">PRODUCTOS</a>
             <a class="text-gray-700 hover:text-blue-900" href="{{ route('contacto') }}">CONTACTO</a>
             <a class="text-gray-700 hover:text-blue-900" href="{{ route('ubicacion') }}">UBICACIÓN</a>
-            @auth
-                @if(auth()->user()->role === 'admin')
-                    <a href="{{ route('inventario') }}">INVENTARIO</a>
-                @endif
-            @endauth
         </nav>
 
         <div class="flex items-center space-x-4">

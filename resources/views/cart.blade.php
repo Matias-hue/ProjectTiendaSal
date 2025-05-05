@@ -1,3 +1,5 @@
+@extends('layouts.app')
+@section('content')
 <?php
 session_start();
 if (!isset($_SESSION['carrito'])) {
@@ -33,3 +35,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </main>
 @include('layouts.footer')
+@endsection
