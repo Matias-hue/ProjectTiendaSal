@@ -51,11 +51,14 @@
             <a class="text-gray-700 hover:text-blue-900" href="{{ route('ubicacion') }}">UBICACIÓN</a>
         </nav>
 
+        
         <div class="flex items-center space-x-4">
+            @if(auth()->check())
             <a href="{{ route('cart') }}" class="cart relative">
                 <i class="fas fa-shopping-cart text-gray-700 text-2xl"></i>
                 <span class="badge">1</span>
             </a>
-        </div>
+            @endif
+        </div>        
     </div>
 </header>

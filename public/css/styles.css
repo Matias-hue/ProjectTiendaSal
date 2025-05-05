@@ -3,7 +3,6 @@ html, body {
     height: 100%;
     margin: 0;   
     padding: 0;
-    font-family: 'Roboto', sans-serif;
     display: flex;
     flex-direction: column;
 }
@@ -12,16 +11,20 @@ html, body {
     margin: 0;
     padding: 0;
     display: flex;
+    flex: 1;
 }
 
 .flex-1 {
     flex: 1;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 main {
-    min-height: 50vh;
+    min-height: 55vh;
     flex-grow: 1;    
-    margin-bottom: 2rem;
+    flex: 1;
+    margin-bottom: 0;
 }
 
 /* Header y Footer */
@@ -79,6 +82,7 @@ header, footer {
     padding: 1rem 2rem; 
     position: relative;
     width: 100%; 
+    margin-top: 2rem;
 }
 
 .footer-content {
@@ -449,4 +453,74 @@ dialog {
     padding: 4px;
     margin: 0 10px;
     text-align: center;
+}
+
+/* Usuarios */
+.container-usuarios {
+    max-width: 100%;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.card-body-usuarios {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-search {
+    border: 2px solid #4A5568;
+    min-width: 400px;
+    padding: 5px;
+}
+
+.input-search input {
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+.tabla-usuarios {
+    max-width: 400px;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.tabla-usuarios table, th, td {
+    border: 2px solid #4A5568;
+}
+
+.tabla-usuarios , td {
+    padding: 10px;
+    text-align: left;
+}
+
+.tabla-usuarios th {
+    background-color: #f2f2f2;
+}
+
+/* Registro */
+.container-registro {
+    max-width: 600px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.card-body-registro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.input-search-registro {
+    border: 2px solid #4A5568;
+    min-width: 600px;
+    padding: 5px;
+}
+
+.input-search-registro input {
+    width: 100%;
+    border: none;
+    outline: none;
 }

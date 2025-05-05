@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\UsuarioController;
 
+
+// Rutas generales
 Route::get('/', function () {
     return view('index');
 })->name('index');
@@ -27,10 +30,20 @@ Route::get('/carrito', function () {
     return view('cart'); 
 })->name('cart');
 
+// Rutas inventarios
 Route::get('/inventario', [ProductoController::class, 'index'])->name('inventario');
 
 Route::post('/productos', [ProductoController::class, 'store'])->name('productos.store');
 Route::put('/productos/{id}', [ProductoController::class, 'update'])->name('productos.update');
 Route::delete('/productos/{id}', [ProductoController::class, 'destroy'])->name('productos.destroy');
+
+
+// Rutas usuarios
+Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios');
+
+// Rutas registro
+Route::get('/registro', function () {
+    return view('registro');
+})->name('registro');
 
 Auth::routes();

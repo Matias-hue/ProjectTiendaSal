@@ -20,9 +20,12 @@
                     <form action='cart.php' method='POST'>
                         <input type='hidden' name='id' value='{$producto['id']}'>
                         <input type='hidden' name='nombre' value='{$producto['nombre']}'>
-                        <input type='hidden' name='precio' value='{$producto['precio']}'>
-                        <button type='submit' class='btn-agregar-carrito'>Agregar al carrito</button>
-                    </form>
+                        <input type='hidden' name='precio' value='{$producto['precio']}'>";
+            if(auth()->check()){
+                echo "<button type='submit' class='btn-agregar-carrito'>Agregar al carrito</button>";
+            }
+                                              
+            echo "</form>
                   </div>";
         }
         ?>

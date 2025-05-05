@@ -67,7 +67,7 @@
                                     {{ __('Registrarse') }}
                                 </button>
 
-                                <a href="{{ route('home') }}" class="btn btn-primary">
+                                <a href="{{ route('index') }}" class="btn btn-primary">
                                     {{ __('Volver') }}
                                 </a>
                             </div>

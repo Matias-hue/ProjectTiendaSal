@@ -13,7 +13,7 @@
             <h2 class="footer-title">Seguinos</h2>
             <div class="social-icons">
                 <a class="social-icon-1" href="#"><i class="fab fa-whatsapp"></i></a>
-                <a class="social-icon-2" href="#"><i class="fab fa-instagram"></i></a>
+                <a class="social-icon-2" href="https://www.instagram.com/sallaisabela/"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
         <div>
