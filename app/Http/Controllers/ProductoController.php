@@ -27,13 +27,20 @@ class ProductoController extends Controller
             'tamaño' => 'required|string|max:255',
             'precio' => 'required|numeric',
             'stock' => 'nullable|integer',
+            'imagen' => 'nullable|image|mimes:jpeg, png, jpg, gif|max:2048',
         ]);
+
+        $imagenPath = null;
+        if ($request->hasFile('imagen')) {
+            $imagenPath = $request->file('imagen')->store('img', 'public');
+        }
 
         Producto::create([
             'nombre' => $request->nombre,
             'tamaño' => $request->tamaño,
             'precio' => $request->precio,
             'stock' => $request->stock ?? 0,
+            'imagen' => $imagenPath,
         ]);
 
         return redirect()->back()->with('success', 'Producto agregado con èxito.');

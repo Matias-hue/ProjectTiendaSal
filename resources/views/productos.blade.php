@@ -8,7 +8,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @forelse ($productos as $producto)
                 <div class="producto-card bg-white border rounded-lg shadow-md p-4">
-                    <img src="{{ asset($producto->imagen ?? 'img/placeholder.jpg') }}" alt="{{ $producto->nombre }}" class="producto-imagen w-full h-48 object-cover rounded">
+                    <img src="{{ $producto->imagen ? asset('img/' . $producto->imagen) : asset('img/placeholder.jpg') }}" alt="{{ $producto->nombre }}" class="producto-imagen w-full h-48 object-cover rounded">
                     <h3 class="producto-nombre text-lg font-semibold mt-2">{{ $producto->nombre }}</h3>
                     <p class="producto-precio text-gray-600">${{ number_format($producto->precio, 2) }}</p>
                     <p class="producto-precio text-gray-600">Tamaño: {{ $producto->tamaño }}</p>
