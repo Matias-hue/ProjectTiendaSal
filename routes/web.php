@@ -1,49 +1,43 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\UsuarioController;
-
+use Illuminate\Support\Facades\Route;
 
 // Rutas generales
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+Route::get('/', fn() => view('index'))->name('index');
 
-Route::get('/home', function () {
-    return redirect()->route('index');
-})->name('home');
+Route::get('/home', fn() => redirect()->route('index'))->name('home');
 
-Route::get('/productos', function () { 
-    return view('productos');   
-})->name('productos');
+Route::get('/productos', [ProductoController::class, 'publicIndex'])->name('productos');
 
-Route::get('/contacto', function () { 
-    return view('contacto'); 
-})->name('contacto');
+Route::get('/contacto', fn() => view('contacto'))->name('contacto');
 
-Route::get('/ubicacion', function () { 
-    return view('ubicacion'); 
-})->name('ubicacion');
+Route::get('/ubicacion', fn() => view('ubicacion'))->name('ubicacion');
 
-Route::get('/carrito', function () { 
-    return view('cart'); 
-})->name('cart');
+// Rutas del carrito
+Route::get('/carrito', [CartController::class, 'index'])->name('cart');
+Route::post('/carrito/add', [CartController::class, 'add'])->name('cart.add')->middleware('auth');
+Route::delete('/carrito/remove/{index}', [CartController::class, 'remove'])->name('cart.remove')->middleware('auth');
+Route::post('/carrito/checkout', [CartController::class, 'checkout'])->name('checkout')->middleware('auth');
 
-// Rutas inventarios
+// Rutas de inventario (admin)
 Route::get('/inventario', [ProductoController::class, 'index'])->name('inventario');
-
 Route::post('/productos', [ProductoController::class, 'store'])->name('productos.store');
 Route::put('/productos/{id}', [ProductoController::class, 'update'])->name('productos.update');
 Route::delete('/productos/{id}', [ProductoController::class, 'destroy'])->name('productos.destroy');
 
+// Rutas de pedidos (admin)
+Route::get('/pedidos', [OrderController::class, 'index'])->name('pedidos.index');
+Route::patch('/pedidos/{id}/complete', [OrderController::class, 'complete'])->name('pedidos.complete');
+Route::delete('/pedidos/{id}', [OrderController::class, 'destroy'])->name('pedidos.destroy');
 
-// Rutas usuarios
+// Rutas de usuarios (admin)
 Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios');
 
-// Rutas registro
-Route::get('/registro', function () {
-    return view('registro');
-})->name('registro');
+// Rutas de registro (admin)
+Route::get('/registro', fn() => view('registro'))->name('registro');
 
 Auth::routes();

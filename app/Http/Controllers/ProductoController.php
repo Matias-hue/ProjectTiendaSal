@@ -14,6 +14,12 @@ class ProductoController extends Controller
         return view('inventario', compact('productos')); 
     }
 
+    public function publicIndex()
+    {
+        $productos = Producto::all();
+        return view('productos', compact('productos'));
+    }
+
     public function store(Request $request) {
 
         $request->validate([
@@ -30,7 +36,7 @@ class ProductoController extends Controller
             'stock' => $request->stock ?? 0,
         ]);
 
-        return redirect()->back()->with('succes', 'Producto agregado con èxito.');
+        return redirect()->back()->with('success', 'Producto agregado con èxito.');
     }
 
     public function update(Request $request, $id) {
@@ -46,7 +52,7 @@ class ProductoController extends Controller
 
         $producto->update($validated);
 
-        return redirect()->back()->with('succes', 'Producto actualizado correctamente.');
+        return redirect()->back()->with('success', 'Producto actualizado correctamente.');
     }
 
     public function destroy($id) {

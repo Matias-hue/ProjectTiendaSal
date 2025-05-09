@@ -1,13 +1,6 @@
 @extends('layouts.app')
 @section('content')
 @include('layouts.header')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
 <body>
     <main>
     <div class="py-4 px-8 text-sm text-gray-500">Inventario</div>
@@ -31,10 +24,22 @@
                             <td>{{ $producto->id }}</td>
                             <td>{{ $producto->nombre }}</td>
                             <td>{{ $producto->tamaño }}</td>
-                            <td>{{ $producto->precio }}</td>
+                            <td>{{ number_format($producto->precio, 2) }}</td>
                             <td>{{ $producto->stock }}</td>
-                            <td><button class="btn-editar-tabla" data-id="{{ $producto->id }}" data-nombre="{{ $producto->nombre }}" data-tamaño="{{ $producto->tamaño }}" data-precio="{{ $producto->precio }}" data-stock="{{ $producto->stock }}">{{ __('Editar')}}</button></td>
-                            <td><button class="btn-eliminar-tabla" data-id="{{ $producto->id }}">{{ __('Eliminar')}}</button></td>
+                            <td>
+                                <button class="btn-editar-tabla" 
+                                data-id="{{ $producto->id }}" 
+                                data-nombre="{{ $producto->nombre }}" 
+                                data-tamaño="{{ $producto->tamaño }}" 
+                                data-precio="{{ $producto->precio }}" 
+                                data-stock="{{ $producto->stock }}">
+                                {{ __('Editar')}}</button>
+                            </td>
+                            <td>
+                                <button class="btn-eliminar-tabla" 
+                                data-id="{{ $producto->id }}">
+                                {{ __('Eliminar')}}</button>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -121,10 +126,8 @@
         </div>  
     </dialog>
 
-    <script src="{{ asset('js/app.js') }}"></script>    
+    <script src="{{ asset('js/inventario.js') }}"></script>    
 
 </main>
-</body>
-</html>
 @include('layouts.footer')
 @endsection

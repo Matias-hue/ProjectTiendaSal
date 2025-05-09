@@ -18,7 +18,7 @@
                             <th>Rol</th>
                         </tr> 
                     </thead>
-                    <tbody>
+                    <tbody id="usuarios-table-body">
                         @foreach($usuarios as $usuario)
                         <tr>
                             <td>{{ $usuario->id }}</td>
@@ -30,6 +30,7 @@
                 </table>
             </div>
         </div>
+        <script src="{{ asset('js/usuarios.js') }}"></script> 
     </main>
 @include('layouts.footer')
 @endsection
