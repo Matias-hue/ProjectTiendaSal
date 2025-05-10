@@ -22,9 +22,17 @@ class OrderController extends Controller
 
     public function destroy($id)
     {
-    $order = Order::findOrFail($id);
-    $order->items()->delete();
-    $order->delete(); 
-    return redirect()->route('pedidos.index')->with('success', 'Pedido eliminado correctamente.');
+        $order = Order::with('items.product')->findOrFail($id);
+
+        foreach ($order->items as $item) {
+            $producto = $item->product;
+            $producto->stock += $item->quantity;
+            $producto->save();
+        }
+
+        $order->items()->delete();
+        $order->delete();
+
+        return redirect()->route('pedidos.index')->with('success', 'Pedido eliminado correctamente.');
     }
 }
