@@ -1,39 +1,19 @@
 @extends('layouts.app')
+
 @section('content')
-@include('layouts.header')
-<!DOCTYPE html>
-<html lang="es">
-<main>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ubicación - Sal La Isabela</title>
-    <link rel="stylesheet" href="{{asset('css/styles.css') }}" />
-</head> 
-<body>
-    <div id="map"></div>
-
-    <script>
-        function initMap() {
-            const ubicacion = {lat: 19.039, lng: -70.123};
-
-            const map = new google.maps.map(document.getElementById("map"), {
-                zoom: 15
-            });
-
-            const marker = new.google.maps.Marker({
-                position: ubicacion,
-                map: map,
-                title: "Sal La Isabela",
-            });
-        }
-    </script>
-
-    <script async
-      src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY&callback=initMap">
-    </script>
-</body>
-</main>
-</html>
-@include('layouts.footer')
+    @include('layouts.header')
+    <div class="py-4 px-8 text-sm text-gray-500">Ubicación</div>
+    <main class="px-8">
+        <h2 class="text-3xl font-bold mb-6">Nuestra Ubicación</h2>
+        <div class="map-container">
+            <iframe
+                width="100%"
+                height="400"
+                frameborder="0" style="border:0"
+                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyByIuA5KDKP7TXNbBt5Ra_aaxWPSdNdDoo&q=-26.82129485543429,-55.02591580168832&zoom=15"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </main>
+    @include('layouts.footer')
 @endsection

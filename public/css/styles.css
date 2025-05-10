@@ -344,9 +344,19 @@ header, footer {
     width: 100%;
 }
 
-/* Mapa 
+/* Mapa */
+.map-container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+}
 
-*/
+#map {
+    height: 400px;
+    width: 100%;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
 /* Inventario */
 .container-inventario {
