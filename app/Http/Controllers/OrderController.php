@@ -16,13 +16,19 @@ class OrderController extends Controller
     public function complete($id)
     {
         $order = Order::findOrFail($id);
-        $order->update(['status' => 'completed']);
-        return redirect()->route('pedidos.index')->with('success', 'Pedido marcado como completado.');
+        if ($order->status !== 'Pendiente') {
+            return response()->json(['error' => 'Solo se pueden completar pedidos pendientes.'], 400);
+        }
+        $order->update(['status' => 'Completado']);
+        return response()->json(['success' => 'Pedido marcado como completado.', 'status' => 'Completado']);
     }
 
-    public function destroy($id)
+    public function cancel($id)
     {
         $order = Order::with('items.product')->findOrFail($id);
+        if ($order->status !== 'Pendiente') {
+            return response()->json(['error' => 'Solo se pueden cancelar pedidos pendientes.'], 400);
+        }
 
         foreach ($order->items as $item) {
             $producto = $item->product;
@@ -30,9 +36,8 @@ class OrderController extends Controller
             $producto->save();
         }
 
-        $order->items()->delete();
-        $order->delete();
+        $order->update(['status' => 'Cancelado']);
 
-        return redirect()->route('pedidos.index')->with('success', 'Pedido eliminado correctamente.');
+        return response()->json(['success' => 'Pedido cancelado correctamente.', 'status' => 'Cancelado']);
     }
 }

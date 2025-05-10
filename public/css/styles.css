@@ -455,6 +455,114 @@ dialog {
     text-align: center;
 }
 
+/* Pedidos */
+.pedidos-container {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pedidos-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #d1d5db;
+}
+
+.pedidos-table th,
+.pedidos-table td {
+    border: 1px solid #d1d5db;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.pedidos-table th {
+    background-color: #f3f4f6;
+}
+
+dialog {
+    border: 2px solid #2D3748;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+}
+
+.header-modal {
+    margin-top: 0;
+    text-align: center;
+    font-size: 1.875rem;
+}
+
+#mensaje-completar,
+#mensaje-cancelar {
+    text-align: center;
+    margin: 20px 0;
+    color: #4b5563;
+}
+
+#dialog-error {
+    border: 2px solid #2D3748;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+}
+
+#mensaje-error {
+    text-align: center;
+    margin: 20px 0;
+    color: #ef4444;
+}
+
+.modal-botones-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.modal-botones {
+    width: 90px;
+    border: 2px solid #2D3748;
+    background-color: #f2f2f2;
+    padding: 4px;
+    margin: 0 10px;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.modal-botones:hover {
+    background-color: #e5e7eb;
+}
+
+.btn-completar {
+    color: #3b82f6;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+    padding: 0.25rem 0.5rem;
+}
+
+.btn-completar:hover {
+    color: #1e40af;
+}
+
+.btn-cancelar {
+    color: #ef4444;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+    padding: 0.25rem 0.5rem;
+}
+
+.btn-cancelar:hover {
+    color: #b91c1c;
+}
+
 /* Usuarios */
 .container-usuarios {
     max-width: 100%;

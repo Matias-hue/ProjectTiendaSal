@@ -32,7 +32,7 @@ Route::delete('/productos/{id}', [ProductoController::class, 'destroy'])->name('
 // Rutas de pedidos (admin)
 Route::get('/pedidos', [OrderController::class, 'index'])->name('pedidos.index');
 Route::patch('/pedidos/{id}/complete', [OrderController::class, 'complete'])->name('pedidos.complete');
-Route::delete('/pedidos/{id}', [OrderController::class, 'destroy'])->name('pedidos.destroy');
+Route::patch('/pedidos/{id}/cancel', [OrderController::class, 'cancel'])->name('pedidos.cancel');
 
 // Rutas de usuarios (admin)
 Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios');
