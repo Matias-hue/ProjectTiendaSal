@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\AlertaController;
 use Illuminate\Support\Facades\Route;
 
 // Rutas generales
@@ -38,7 +39,7 @@ Route::patch('/pedidos/{id}/cancel', [OrderController::class, 'cancel'])->name('
 Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios');
 
 // Rutas de alertas (admin)
-Route::get('/alertas', fn() => view('alertas'))->name('alertas');
+Route::get('/alertas', [AlertaController::class, 'index'])->name('alertas');
 
 // Rutas de registro (admin)
 Route::get('/registro', fn() => view('registro'))->name('registro');
