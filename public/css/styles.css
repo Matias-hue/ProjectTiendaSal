@@ -371,6 +371,10 @@ header, footer {
     align-items: center;
 }
 
+.stock-bajo {
+    background-color: #f07b7b;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
