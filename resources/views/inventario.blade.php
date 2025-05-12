@@ -20,7 +20,7 @@
                 </thead>
                 <tbody>
                     @foreach($productos as $producto)
-                        <tr>
+                        <tr class="{{ $producto->stock <= 100 ? 'bg-red-300' : '' }}">
                             <td>{{ $producto->id }}</td>
                             <td>{{ $producto->nombre }}</td>
                             <td>{{ $producto->tamaño }}</td>

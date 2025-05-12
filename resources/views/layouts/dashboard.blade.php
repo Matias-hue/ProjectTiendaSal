@@ -7,7 +7,7 @@
                 <li><a href="{{ route('inventario') }}" class="text-gray-700 hover:text-blue-600">📦 Inventario</a></li>
                 <li><a href="{{ route('pedidos.index') }}" class="text-gray-700 hover:text-blue-600">🛒 Pedidos</a></li>
                 <li><a href="{{ route('usuarios') }}" class="text-gray-700 hover:text-blue-600">👥 Usuarios</a></li>
-                <li><a href="#" class="text-gray-700 hover:text-blue-600">📢 Alertas</a></li>
+                <li><a href="{{ route('alertas') }}" class="text-gray-700 hover:text-blue-600">📢 Alertas</a></li>
                 <li><a href="{{ route('registro') }}" class="text-gray-700 hover:text-blue-600">⚙️ Logs de actividad</a></li>
             </ul>
         </div>

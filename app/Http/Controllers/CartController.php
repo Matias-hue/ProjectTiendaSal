@@ -72,13 +72,13 @@ class CartController extends Controller
             Log::warning('Carrito vacío en checkout');
             return redirect()->route('cart')->with('error', 'El carrito está vacío.');
         }
-
+        
         DB::beginTransaction();
         try {
             $order = Order::create([
                 'user_id' => auth()->id(),
                 'total' => collect($carrito)->sum(fn($item) => $item['precio'] * $item['cantidad']),
-                'status' => 'pending',
+                'status' => 'Pendiente',
             ]);
 
             foreach ($carrito as $item) {

@@ -37,6 +37,9 @@ Route::patch('/pedidos/{id}/cancel', [OrderController::class, 'cancel'])->name('
 // Rutas de usuarios (admin)
 Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios');
 
+// Rutas de alertas (admin)
+Route::get('/alertas', fn() => view('alertas'))->name('alertas');
+
 // Rutas de registro (admin)
 Route::get('/registro', fn() => view('registro'))->name('registro');
 
