@@ -24,6 +24,9 @@ Route::post('/carrito/add', [CartController::class, 'add'])->name('cart.add')->m
 Route::delete('/carrito/remove/{index}', [CartController::class, 'remove'])->name('cart.remove')->middleware('auth');
 Route::post('/carrito/checkout', [CartController::class, 'checkout'])->name('checkout')->middleware('auth');
 
+// Ruta de resumen
+Route::get('/resumen', fn() => view('resumen'))->name('resumen');
+
 // Rutas de inventario (admin)
 Route::get('/inventario', [ProductoController::class, 'index'])->name('inventario');
 Route::post('/productos', [ProductoController::class, 'store'])->name('productos.store');
