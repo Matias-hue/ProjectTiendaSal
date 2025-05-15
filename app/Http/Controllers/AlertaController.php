@@ -16,4 +16,12 @@ class AlertaController extends Controller
 
         return view('alertas', compact('pedidosPendientes', 'productosBajoStock'));
     }
+
+    public static function getTotalAlertas()
+    {
+        $pedidosPendientes = Order::where('status', 'Pendiente')->with('user')->count();
+        $productosBajoStock = Producto::where('stock', '<=', 100)->count();
+
+        return $pedidosPendientes + $productosBajoStock;
+    }
 }
