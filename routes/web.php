@@ -25,7 +25,7 @@ Route::delete('/carrito/remove/{index}', [CartController::class, 'remove'])->nam
 Route::post('/carrito/checkout', [CartController::class, 'checkout'])->name('checkout')->middleware('auth');
 
 // Ruta de resumen
-Route::get('/resumen', fn() => view('resumen'))->name('resumen');
+Route::get('/resumen', [App\Http\Controllers\ResumenController::class, 'index'])->name('resumen');
 
 // Rutas de inventario (admin)
 Route::get('/inventario', [ProductoController::class, 'index'])->name('inventario');
