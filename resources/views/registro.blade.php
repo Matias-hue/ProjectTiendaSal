@@ -1,30 +1,44 @@
 @extends('layouts.app')
+
 @section('content')
-@include('layouts.header') 
-    <main>
-        <div class="py-4 px-8 text-sm text-gray-500">Registro</div>
-
-        <div class="container-registro">
-            <div class="card-body-registro">
-                <div class="input-search-registro">
-                    <input type="text" id="search-registro" placeholder="Buscar usuario...">
-                </div>
-
-                <table class="tabla-registro">
-                    <thead>
+    @include('layouts.header')
+    <main class="container">
+        <h1>📋 Registro de Actividades</h1>
+        <div class="card">
+            <input type="text" id="search-registro" name="search" value="{{ $search ?? '' }}" placeholder="Buscar por usuario..." class="search-input">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Usuario</th>
+                        <th>Acción</th>
+                        <th>Descripción</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($logs as $log)
                         <tr>
-                            <th>ID</th>
-                            <th>Usuario</th>
-                            <th>Fecha</th>
+                            <td>{{ $log->id }}</td>
+                            <td>{{ $log->user->name ?? 'N/A' }}</td>
+                            <td>{{ ucfirst(str_replace('_', ' ', $log->action)) }}</td>
+                            <td>{{ $log->description }}</td>
+                            <td>{{ $log->created_at->format('d/m/Y H:i') }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
+                    @empty
                         <tr>
+                            <td colspan="5" class="empty">No hay registros disponibles.</td>
                         </tr>
-                    </tbody>                  
-                </table>
+                    @endforelse
+                </tbody>
+            </table>
+            <div class="pagination">
+                {{ $logs->appends(['search' => $search])->links() }}
             </div>
         </div>
     </main>
-@include('layouts.footer')
+    @include('layouts.footer')
+
+    <link rel="stylesheet" href="{{ asset('css/registro.css') }}">
+    <script src="{{ asset('js/registro.js') }}"></script>
 @endsection

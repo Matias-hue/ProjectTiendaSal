@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Producto;
+use App\Traits\LogActivity;
+use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
+    use LogActivity;
+
     public function index()
     {
         $productos = Producto::all();
@@ -20,14 +22,14 @@ class ProductoController extends Controller
         return view('productos', compact('productos'));
     }
 
-    public function store(Request $request) {
-
+    public function store(Request $request)
+    {
         $request->validate([
             'nombre' => 'required|string|max:255',
             'tamaño' => 'required|string|max:255',
             'precio' => 'required|numeric',
             'stock' => 'nullable|integer',
-            'imagen' => 'nullable|image|mimes:jpeg, png, jpg, gif|max:2048',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $imagenPath = null;
@@ -35,7 +37,7 @@ class ProductoController extends Controller
             $imagenPath = $request->file('imagen')->store('img', 'public');
         }
 
-        Producto::create([
+        $producto = Producto::create([
             'nombre' => $request->nombre,
             'tamaño' => $request->tamaño,
             'precio' => $request->precio,
@@ -43,11 +45,13 @@ class ProductoController extends Controller
             'imagen' => $imagenPath,
         ]);
 
-        return redirect()->back()->with('success', 'Producto agregado con èxito.');
+        $this->logActivity('crear_producto', "Creó el producto {$request->nombre}");
+
+        return redirect()->back()->with('success', 'Producto agregado con éxito.');
     }
 
-    public function update(Request $request, $id) {
-        
+    public function update(Request $request, $id)
+    {
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'tamaño' => 'required|string|max:255',
@@ -56,17 +60,21 @@ class ProductoController extends Controller
         ]);
 
         $producto = Producto::findOrFail($id);
-
         $producto->update($validated);
+
+        $this->logActivity('actualizar_producto', "Actualizó el producto {$producto->nombre}");
 
         return redirect()->back()->with('success', 'Producto actualizado correctamente.');
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $producto = Producto::findOrFail($id);
+        $nombre = $producto->nombre;
         $producto->delete();
+
+        $this->logActivity('eliminar_producto', "Eliminó el producto {$nombre}");
 
         return response()->json(['success' => 'Producto eliminado correctamente.']);
     }
-
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\AlertaController;
+use App\Http\Controllers\ActivityLogController;
 use Illuminate\Support\Facades\Route;
 
 // Rutas generales
@@ -45,6 +46,6 @@ Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios');
 Route::get('/alertas', [AlertaController::class, 'index'])->name('alertas');
 
 // Rutas de registro (admin)
-Route::get('/registro', fn() => view('registro'))->name('registro');
+Route::get('/registro', [ActivityLogController::class, 'index'])->name('registro');
 
 Auth::routes();
