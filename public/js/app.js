@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     console.log(dialogAgregar); 
+    
     console.log(form); 
     
 
