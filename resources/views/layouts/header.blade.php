@@ -22,7 +22,6 @@
         <nav class="hidden md:flex space-x-8 text-lg">
             <a class="text-gray-700 hover:text-blue-900" href="{{ route('index') }}">INICIO</a>
             <a class="text-gray-700 hover:text-blue-900" href="{{ route('productos') }}">PRODUCTOS</a>
-            <a class="text-gray-700 hover:text-blue-900" href="{{ route('contacto') }}">CONTACTO</a>
             <a class="text-gray-700 hover:text-blue-900" href="{{ route('ubicacion') }}">UBICACIÓN</a>
         </nav>
 
