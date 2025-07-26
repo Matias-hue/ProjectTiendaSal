@@ -18,7 +18,6 @@ class UsuarioController extends Controller
             $usuarios = User::all();
         }
 
-        // Si la solicitud es AJAX, devolver JSON
         if ($request->ajax()) {
             return response()->json($usuarios);
         }

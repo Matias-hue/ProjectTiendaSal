@@ -3,7 +3,7 @@
 @section('content')
     @include('layouts.header')
     <main class="container">
-        <h1>📋 Registro de Actividades</h1>
+        <h1 class="titulo-registro">📋 Registro de Actividades</h1>
         <div class="card">
             <input type="text" id="search-registro" name="search" value="{{ $search ?? '' }}" placeholder="Buscar por usuario..." class="search-input">
             <table class="table">

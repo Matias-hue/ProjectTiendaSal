@@ -34,8 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    console.log(dialogAgregar); // Verifica si dialogAgregar es null
-    console.log(form); // Verifica si form es null
+    console.log(dialogAgregar); 
+    console.log(form); 
     
 
     // Edicion
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             const fila = this.closest('tr');
             const celdas = fila.querySelectorAll('td');
-            console.log(celdas); // Para validar qué celdas se obtienen
+            console.log(celdas);
             const nombre = celdas[1]?.innerText || 'nombre no encontrado';
             document.getElementById('mensaje-eliminar').innerText = `¿Estás seguro de que deseas eliminar el producto "${nombre}"?`;
             dialogEliminar.showModal();
