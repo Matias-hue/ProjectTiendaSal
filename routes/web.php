@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\AlertaController;
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
 // Rutas generales
@@ -14,8 +15,6 @@ Route::get('/', fn() => view('index'))->name('index');
 Route::get('/home', fn() => redirect()->route('index'))->name('home');
 
 Route::get('/productos', [ProductoController::class, 'publicIndex'])->name('productos');
-
-Route::get('/contacto', fn() => view('contacto'))->name('contacto');
 
 Route::get('/ubicacion', fn() => view('ubicacion'))->name('ubicacion');
 

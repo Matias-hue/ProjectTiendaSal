@@ -6,7 +6,14 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/sass/app.scss',
-                'resources/js/app.js',               
+                'resources/js/app.js',      
+                'resources/js/bootstrap.js',
+                'resources/js/inventario.js',
+                'resources/js/pedidos.js',
+                'resources/js/registro.js',
+                'resources/js/resumen.js',
+                'resources/js/ubicacion.js',
+                'resources/js/usuarios.js',        
             ],
             refresh: true,
         }),
