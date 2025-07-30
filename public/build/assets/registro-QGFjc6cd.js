@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",function(){document.getElementById("search-registro").addEventListener("keypress",function(e){if(e.key==="Enter"){const n=e.target.value;window.location.href="/registro?search="+encodeURIComponent(n)}})});

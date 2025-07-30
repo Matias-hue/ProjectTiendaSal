@@ -1,0 +1,55 @@
+{
+  "resources/js/app.js": {
+    "file": "assets/app-Da3oW4tL.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/bootstrap.js": {
+    "file": "assets/bootstrap-D-03kJxt.js",
+    "name": "bootstrap",
+    "src": "resources/js/bootstrap.js",
+    "isEntry": true
+  },
+  "resources/js/inventario.js": {
+    "file": "assets/inventario-DKyMQpex.js",
+    "name": "inventario",
+    "src": "resources/js/inventario.js",
+    "isEntry": true
+  },
+  "resources/js/pedidos.js": {
+    "file": "assets/pedidos-Cim7EMg_.js",
+    "name": "pedidos",
+    "src": "resources/js/pedidos.js",
+    "isEntry": true
+  },
+  "resources/js/registro.js": {
+    "file": "assets/registro-QGFjc6cd.js",
+    "name": "registro",
+    "src": "resources/js/registro.js",
+    "isEntry": true
+  },
+  "resources/js/resumen.js": {
+    "file": "assets/resumen-JCgtoZl2.js",
+    "name": "resumen",
+    "src": "resources/js/resumen.js",
+    "isEntry": true
+  },
+  "resources/js/ubicacion.js": {
+    "file": "assets/ubicacion-D4eYsxbx.js",
+    "name": "ubicacion",
+    "src": "resources/js/ubicacion.js",
+    "isEntry": true
+  },
+  "resources/js/usuarios.js": {
+    "file": "assets/usuarios-DSVec25v.js",
+    "name": "usuarios",
+    "src": "resources/js/usuarios.js",
+    "isEntry": true
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app-DqME6eCz.css",
+    "src": "resources/sass/app.scss",
+    "isEntry": true
+  }
+}
