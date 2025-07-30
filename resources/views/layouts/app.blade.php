@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}"/>
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css'])
 </head>S
 <body>
     <div id="app" class="flex"> 
