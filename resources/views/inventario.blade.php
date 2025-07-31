@@ -126,7 +126,7 @@
         </div>  
     </dialog>
 
-    @vite(['resources/js/app.js', 'resources/js/inventario.js'])
+    @vite(['resources/js/inventario.js'])
 
 </main>
 @include('layouts.footer')
