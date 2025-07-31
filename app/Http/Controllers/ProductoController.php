@@ -75,6 +75,6 @@ class ProductoController extends Controller
 
         $this->logActivity('eliminar_producto', "Eliminó el producto {$nombre}");
 
-        return response()->json(['success' => 'Producto eliminado correctamente.']);
+        return response()->json(['message' => 'Producto eliminado correctamente.'], 200);
     }
 }
