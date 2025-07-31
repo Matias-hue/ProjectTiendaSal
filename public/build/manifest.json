@@ -4,7 +4,7 @@
     "name": "index"
   },
   "resources/js/app.js": {
-    "file": "assets/app-9BozlyQ0.js",
+    "file": "assets/app-0wrMk5RU.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -22,7 +22,7 @@
     ]
   },
   "resources/js/inventario.js": {
-    "file": "assets/inventario-DKyMQpex.js",
+    "file": "assets/inventario-Dp7XWfmr.js",
     "name": "inventario",
     "src": "resources/js/inventario.js",
     "isEntry": true
