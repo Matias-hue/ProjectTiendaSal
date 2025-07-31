@@ -1,3 +1,5 @@
+@import 'resources/sass/app.scss';
+
 /* Estilos generales */
 html, body {
     height: 100%;
