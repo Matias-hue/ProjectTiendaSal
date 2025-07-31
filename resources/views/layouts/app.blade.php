@@ -24,7 +24,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss')]
+    @vite(['resources/sass/app.scss'])
+    
 </head>
 <body>
     <div id="app" class="flex"> 
