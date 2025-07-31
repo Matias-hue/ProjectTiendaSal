@@ -6,7 +6,6 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/sass/app.scss',
-                'resources/css/app.css',
                 'resources/js/app.js',      
                 'resources/js/bootstrap.js',
                 'resources/js/inventario.js',
@@ -14,8 +13,7 @@ export default defineConfig({
                 'resources/js/registro.js',
                 'resources/js/resumen.js',
                 'resources/js/ubicacion.js',
-                'resources/js/usuarios.js',    
-                'public/css/styles.css',    
+                'resources/js/usuarios.js',        
             ],
             refresh: true,
         }),

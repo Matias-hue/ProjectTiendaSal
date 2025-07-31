@@ -1,15 +1,25 @@
 {
+  "_index-DtQ_HIrt.js": {
+    "file": "assets/index-DtQ_HIrt.js",
+    "name": "index"
+  },
   "resources/js/app.js": {
-    "file": "assets/app-Da3oW4tL.js",
+    "file": "assets/app-9BozlyQ0.js",
     "name": "app",
     "src": "resources/js/app.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_index-DtQ_HIrt.js"
+    ]
   },
   "resources/js/bootstrap.js": {
-    "file": "assets/bootstrap-D-03kJxt.js",
+    "file": "assets/bootstrap-CdbvVh_i.js",
     "name": "bootstrap",
     "src": "resources/js/bootstrap.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_index-DtQ_HIrt.js"
+    ]
   },
   "resources/js/inventario.js": {
     "file": "assets/inventario-DKyMQpex.js",
@@ -48,7 +58,7 @@
     "isEntry": true
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-yVt2QDJy.css",
+    "file": "assets/app-CjMe5AZQ.css",
     "src": "resources/sass/app.scss",
     "isEntry": true
   }

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inicio</title>
-    @vite(['resources/css/app.css'])
+    @vite(['resources/sass/app.scss'])
 </head>
 <body>
     <div class="container">

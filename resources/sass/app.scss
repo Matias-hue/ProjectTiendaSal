@@ -7,6 +7,10 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
-@import 'resources/css/app.css';
+// Tailwind
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@import 'public/css/styles.css';
+// Estilos personalizados
+@import '../css/estilos.css';
