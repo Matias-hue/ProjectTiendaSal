@@ -126,8 +126,6 @@
         </div>  
     </dialog>
 
-    @vite(['resources/js/inventario.js'])
-
 </main>
 @include('layouts.footer')
 @endsection
