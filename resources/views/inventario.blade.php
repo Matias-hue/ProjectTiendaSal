@@ -127,6 +127,7 @@
     </dialog>
 
     <script src="{{ asset('js/inventario.js') }}"></script>    
+    @vite(['resources/js/app.js', 'resources/js/inventario.js'])
 
 </main>
 @include('layouts.footer')
