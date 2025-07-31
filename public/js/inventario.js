@@ -97,27 +97,31 @@ document.addEventListener('DOMContentLoaded', function() {
     // Confirmar Eliminación
     if(btnConfirmarEliminar){
         btnConfirmarEliminar.addEventListener('click', function() {
-            btnConfirmarEliminar.disabled = true;
-            btnConfirmarEliminar.innerText = "Eliminando...";
+        btnConfirmarEliminar.disabled = true;
+        btnConfirmarEliminar.innerText = "Eliminando...";
 
-            fetch(`/productos/${productoId}`, {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    location.reload();
-                } else {
-                    alert('Error al eliminar el producto.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Hubo un problema con la eliminación: ' + error.message);
-            });
+        fetch(`/productos/${productoId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error del servidor: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data.message);
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un problema con la eliminación: ' + error.message);
         });
+    });
     }
 
     // Cerrar Eliminacion
