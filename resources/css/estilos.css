@@ -418,7 +418,7 @@ dialog {
 .pedidos-table td {
     border-right: 0.0625rem solid #d1d5db;
     border-bottom: 0.0625rem solid #d1d5db;
-    padding: 0.5rem;
+    padding: 0.75rem; 
     text-align: left;
 }
 
@@ -426,87 +426,140 @@ dialog {
     background-color: #f3f4f6;
 }
 
-dialog {
-    border: 0.125rem solid #2D3748;
-    border-radius: 0.5rem;
-    padding: 1.25rem;
-    width: 25rem;
-}
-
-.header-modal {
-    margin-top: 0;
+.btn-crear-pedido {
+    display: inline-block;
+    background: #1e3a8a;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    font-size: 1.125rem; 
+    font-weight: 500;
     text-align: center;
-    font-size: 1.875rem;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 100%; 
+    max-width: 20rem; 
 }
 
-#mensaje-completar,
-#mensaje-cancelar {
-    text-align: center;
-    margin: 1.25rem 0;
-    color: #4b5563;
+.btn-crear-pedido:hover {
+    background: #1e40af;
+    transform: translateY(-0.125rem); 
 }
 
-#dialog-error {
-    border: 0.125rem solid #2D3748;
-    border-radius: 0.5rem;
-    padding: 1.25rem;
-    width: 25rem;
-}
-
-#mensaje-error {
-    text-align: center;
-    margin: 1.25rem 0;
-    color: #ef4444;
-}
-
-.modal-botones-div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1.25rem;
-    margin-bottom: 1.25rem;
-}
-
-.modal-botones {
-    width: 5.625rem;
-    border: 0.125rem solid #2D3748;
-    background-color: #f2f2f2;
-    padding: 0.25rem;
-    margin: 0 0.625rem;
-    text-align: center;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.modal-botones:hover {
-    background-color: #e5e7eb;
+.btn-crear-pedido:focus {
+    outline: 2px solid #1e40af;
+    outline-offset: 2px;
 }
 
 .btn-completar {
+    display: inline-block;
+    background: #dbeafe;
     color: #3b82f6;
-    background: none;
-    border: none;
+    border: 1px solid #3b82f6;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
     cursor: pointer;
-    transition: color 0.3s;
-    padding: 0.25rem 0.5rem;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    font-size: 0.875rem;
+    text-align: center;
 }
 
 .btn-completar:hover {
-    color: #1e40af;
+    background: #3b82f6;
+    color: #fff;
+    transform: translateY(-0.125rem);
+}
+
+.btn-completar:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
 }
 
 .btn-cancelar {
+    display: inline-block;
+    background: #fee2e2; 
     color: #ef4444;
-    background: none;
-    border: none;
+    border: 1px solid #ef4444;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
     cursor: pointer;
-    transition: color 0.3s;
-    padding: 0.25rem 0.5rem;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    font-size: 0.875rem;
+    text-align: center;
 }
 
 .btn-cancelar:hover {
-    color: #b91c1c;
+    background: #ef4444;
+    color: #fff;
+    transform: translateY(-0.125rem);
+}
+
+.btn-cancelar:focus {
+    outline: 2px solid #ef4444;
+    outline-offset: 2px;
+}
+
+.btn-editar {
+    display: inline-block;
+    background: #e0e7ff; 
+    color: #1e3a8a;
+    border: 1px solid #1e3a8a;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    font-size: 0.875rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-editar:hover {
+    background: #1e3a8a;
+    color: #fff;
+    transform: translateY(-0.125rem);
+}
+
+.btn-editar:focus {
+    outline: 2px solid #1e3a8a;
+    outline-offset: 2px;
+}
+
+.btn-detalles {
+    display: inline-block;
+    background: #e0e7ff; 
+    color: #1e3a8a;
+    border: 1px solid #1e3a8a;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+.btn-detalles:hover {
+    background: #1e3a8a;
+    color: #fff;
+    transform: translateY(-0.125rem);
+}
+
+.btn-detalles:focus {
+    outline: 2px solid #1e3a8a;
+    outline-offset: 2px;
+}
+
+.mb-4 {
+    display: flex;
+    justify-content: center; 
+    margin-bottom: 1.5rem;
+}
+
+.pedidos-table td {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem; 
+    align-items: center;
 }
 
 /* Usuarios */
@@ -581,4 +634,41 @@ dialog {
     width: 100%;
     border: none;
     outline: none;
+}
+
+/* Paginacion */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.pagination .page-item {
+    display: inline-flex;
+    align-items: center;
+}
+
+.pagination .page-link {
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    color: #374151;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.pagination .page-link:hover {
+    background-color: #f3f4f6;
+}
+
+.pagination .active .page-link {
+    background-color: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
+.pagination .disabled .page-link {
+    color: #9ca3af;
+    cursor: not-allowed;
 }
