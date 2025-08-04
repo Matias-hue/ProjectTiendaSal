@@ -43,6 +43,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="pagination mt-6">
+                    {{ $pedidos->links() }}
+                </div>
             @endif
         </div>
 

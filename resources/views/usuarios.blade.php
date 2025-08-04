@@ -37,6 +37,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="pagination mt-6">
+                    {{ $usuarios->links() }}
+                </div>
             </div>
         </div>
         <script src="{{ asset('js/usuarios.js') }}"></script>

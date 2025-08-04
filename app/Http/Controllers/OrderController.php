@@ -16,7 +16,7 @@ class OrderController extends Controller
 
     public function index()
     {
-        $pedidos = Order::with(['user', 'items.product'])->latest()->get();
+        $pedidos = Order::with(['user', 'items.product'])->latest()->paginate(10);
         return view('pedidos', compact('pedidos'));
     }
 

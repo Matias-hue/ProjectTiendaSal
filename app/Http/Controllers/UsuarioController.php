@@ -15,7 +15,7 @@ class UsuarioController extends Controller
     {
         $search = $request->input('search');
         $usuarios = $search
-            ? User::where('name', 'LIKE', "%{$search}%")->get()
+            ? User::where('name', 'LIKE', "%{$search}%")->paginate(10)
             : User::all();
 
         if ($request->ajax()) {
