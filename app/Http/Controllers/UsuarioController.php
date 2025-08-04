@@ -14,12 +14,23 @@ class UsuarioController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $usuarios = $search
-            ? User::where('name', 'LIKE', "%{$search}%")->paginate(10)
-            : User::all();
+
+        $usuarios = User::when($search, function ($query, $search) {
+            return $query->where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('email', 'LIKE', "%{$search}%");
+        })
+        ->latest()
+        ->paginate(10)
+        ->appends(['search' => $search]);
 
         if ($request->ajax()) {
-            return response()->json($usuarios);
+            return response()->json([
+                'data' => $usuarios->items(),
+                'links' => $usuarios->links()->toHtml(),
+                'total' => $usuarios->total(),
+                'current_page' => $usuarios->currentPage(),
+                'last_page' => $usuarios->lastPage(),
+            ]);
         }
 
         return view('usuarios', compact('usuarios'));
