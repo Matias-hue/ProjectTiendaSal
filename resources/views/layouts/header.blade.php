@@ -5,6 +5,9 @@
                 <a class="text-gray-700 hover:text-blue-900" href="{{ route('register') }}">Crear cuenta</a>
                 <a class="text-gray-700 hover:text-blue-900" href="{{ route('login') }}">Iniciar sesión</a>
             @else 
+                @auth
+                    <a class="text-gray-700 hover:text-blue-900" href="{{ route('profile.edit') }}">Mi Perfil</a>
+                @endauth
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
                     @csrf
                     <button type="submit" class="text-gray-700 hover:text-blue-900">Cerrar sesión</button>

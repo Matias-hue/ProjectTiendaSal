@@ -16,6 +16,12 @@ class OrderController extends Controller
         return view('pedidos', compact('pedidos'));
     }
 
+    public function show($id)
+    {   
+        $pedido = Order::with(['user', 'items.product'])->findOrFail($id);
+        return view('pedidos-show', compact('pedido'));
+    }
+
     public function complete($id)
     {
         $order = Order::findOrFail($id);

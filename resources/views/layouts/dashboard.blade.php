@@ -5,7 +5,17 @@
             <ul class="space-y-4 text-lg">
                 <li><a href="{{ route('resumen') }}" class="text-gray-700 hover:text-blue-600">📈 Resumen</a></li>
                 <li><a href="{{ route('inventario') }}" class="text-gray-700 hover:text-blue-600">📦 Inventario</a></li>
-                <li><a href="{{ route('pedidos.index') }}" class="text-gray-700 hover:text-blue-600">🛒 Pedidos</a></li>
+                <li>
+                    <a href="{{ route('pedidos.index') }}" class="text-gray-700 hover:text-blue-600">
+                        🛒 Pedidos
+                        @php
+                            $pendingOrders = App\Models\Order::where('status', 'Pendiente')->count();
+                        @endphp
+                        @if($pendingOrders > 0)
+                            <span class="badge inline-block bg-red-500 text-white text-xs rounded-full px-2 py-1 ml-2">{{ $pendingOrders }}</span>
+                        @endif
+                    </a>
+                </li>
                 <li><a href="{{ route('usuarios') }}" class="text-gray-700 hover:text-blue-600">👥 Usuarios</a></li>
                 <li>
                     <a href="{{ route('alertas') }}" class="text-gray-700 hover:text-blue-600">

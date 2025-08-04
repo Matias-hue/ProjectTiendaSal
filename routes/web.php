@@ -6,7 +6,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\AlertaController;
 use App\Http\Controllers\ActivityLogController;
-use App\Http\Controllers\ContactController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Rutas generales
@@ -17,6 +17,10 @@ Route::get('/home', fn() => redirect()->route('index'))->name('home');
 Route::get('/productos', [ProductoController::class, 'publicIndex'])->name('productos');
 
 Route::get('/ubicacion', fn() => view('ubicacion'))->name('ubicacion');
+
+// Rutas de perfil
+Route::get('/profile/edit', [UserController::class, 'edit'])->name('profile.edit')->middleware('auth');
+Route::put('/profile', [UserController::class, 'update'])->name('profile.update')->middleware('auth');
 
 // Rutas del carrito
 Route::get('/carrito', [CartController::class, 'index'])->name('cart');
@@ -37,6 +41,7 @@ Route::delete('/productos/{id}', [ProductoController::class, 'destroy'])->name('
 Route::get('/pedidos', [OrderController::class, 'index'])->name('pedidos.index');
 Route::patch('/pedidos/{id}/complete', [OrderController::class, 'complete'])->name('pedidos.complete');
 Route::patch('/pedidos/{id}/cancel', [OrderController::class, 'cancel'])->name('pedidos.cancel');
+Route::get('/pedidos/{id}', [OrderController::class, 'show'])->name('pedidos.show');
 
 // Rutas de usuarios (admin)
 Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios');

@@ -31,10 +31,9 @@
                                 <td class="border border-gray-300 p-2">
                                     @if ($pedido->status === 'Pendiente')
                                         <button class="btn-completar" data-id="{{ $pedido->id }}">Marcar como Completado</button>
-                                    @endif
-                                    @if ($pedido->status === 'Pendiente')
                                         <button class="btn-cancelar" data-id="{{ $pedido->id }}">Cancelar</button>
                                     @endif
+                                    <button class="btn-detalles" data-id="{{ $pedido->id }}">Ver Detalles</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -66,6 +65,15 @@
             <p id="mensaje-error"></p>
             <div class="modal-botones-div">
                 <button id="btn-cerrar-error" class="modal-botones">Cerrar</button>
+            </div>
+        </dialog>
+
+        <dialog id="detailsModal">
+            <h2 class="header-modal">Detalles del Pedido</h2>
+            <div id="detailsContent"></div>
+            <div class="modal-botones-div">
+                <button class="modal-botones" onclick="document.getElementById('detailsModal').close()">Cerrar</button>
+                <a href="#" id="pdfLink" class="modal-botones">Descargar PDF</a>
             </div>
         </dialog>
     </main>

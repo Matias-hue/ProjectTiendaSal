@@ -1,9 +1,11 @@
+// pedidos.js
 document.addEventListener('DOMContentLoaded', function () {
     console.log('JavaScript de Pedidos cargado');
 
     const dialogCompletar = document.getElementById('dialog-completar');
     const dialogCancelar = document.getElementById('dialog-cancelar');
     const dialogError = document.getElementById('dialog-error');
+    const dialogDetails = document.getElementById('detailsModal');
     const btnCerrarCompletar = document.getElementById('btn-cerrar-completar');
     const btnCerrarCancelar = document.getElementById('btn-cerrar-cancelar');
     const btnCerrarError = document.getElementById('btn-cerrar-error');
@@ -31,6 +33,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    const detailsButtons = document.querySelectorAll('.btn-detalles');
+    detailsButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            const pedidoId = this.getAttribute('data-id');
+            if (pedidoId) {
+                showDetails(pedidoId);
+            } else {
+                mostrarError('ID del pedido no encontrado.');
+            }
+        });
+    });
+
     if (btnConfirmarCompletar) {
         btnConfirmarCompletar.addEventListener('click', function () {
             btnConfirmarCompletar.disabled = true;
@@ -51,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const actionCell = currentRow?.querySelector('td:last-child');
 
                     if (statusCell) statusCell.textContent = 'Completado';
-                    if (actionCell) actionCell.innerHTML = '';
+                    if (actionCell) actionCell.innerHTML = `<button class="btn-detalles" data-id="${currentOrderId}">Ver Detalles</button>`;
 
                     if (dialogCompletar) dialogCompletar.close();
                 } else {
@@ -105,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const actionCell = currentRow?.querySelector('td:last-child');
 
                     if (statusCell) statusCell.textContent = 'Cancelado';
-                    if (actionCell) actionCell.innerHTML = '';
+                    if (actionCell) actionCell.innerHTML = `<button class="btn-detalles" data-id="${currentOrderId}">Ver Detalles</button>`;
 
                     if (dialogCancelar) dialogCancelar.close();
                 } else {
@@ -133,3 +148,33 @@ document.addEventListener('DOMContentLoaded', function () {
         btnCerrarError.addEventListener('click', () => dialogError.close());
     }
 });
+
+function showDetails(pedidoId) {
+    fetch(`/pedidos/${pedidoId}`, {
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Accept': 'text/html',
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error HTTP: ' + response.status);
+        }
+        return response.text();
+    })
+    .then(html => {
+        document.getElementById('detailsContent').innerHTML = html;
+        document.getElementById('pdfLink').href = `/pedidos/${pedidoId}/pdf`;
+        const dialogDetails = document.getElementById('detailsModal');
+        if (dialogDetails) dialogDetails.showModal();
+    })
+    .catch(error => {
+        console.error('Error al cargar detalles:', error);
+        const mensajeError = document.getElementById('mensaje-error');
+        const dialogError = document.getElementById('dialog-error');
+        if (mensajeError && dialogError) {
+            mensajeError.textContent = 'Error al cargar los detalles del pedido: ' + error.message;
+            dialogError.showModal();
+        }
+    });
+}
