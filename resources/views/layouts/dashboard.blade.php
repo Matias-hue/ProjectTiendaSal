@@ -16,7 +16,7 @@
                         @endif
                     </a>
                 </li>
-                <li><a href="{{ route('usuarios') }}" class="text-gray-700 hover:text-blue-600">👥 Usuarios</a></li>
+                <li><a href="{{ route('usuarios.index') }}" class="text-gray-700 hover:text-blue-600">👥 Usuarios</a></li>
                 <li>
                     <a href="{{ route('alertas') }}" class="text-gray-700 hover:text-blue-600">
                         📢 Alertas 
