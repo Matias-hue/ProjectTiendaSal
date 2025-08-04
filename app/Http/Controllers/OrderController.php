@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Traits\LogActivity;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
@@ -51,5 +52,12 @@ class OrderController extends Controller
         $this->logActivity('cancelar_pedido', "Canceló el pedido #{$id}");
 
         return response()->json(['success' => 'Pedido cancelado correctamente.', 'status' => 'Cancelado']);
+    }
+
+    public function pdf($id)
+    {
+        $pedido = Order::with(['user', 'items.product'])->findOrFail($id);
+        $pdf = Pdf::loadView('pedidos-pdf', compact('pedido'));
+        return $pdf->download('pedido-' . $pedido->id . '.pdf');
     }
 }

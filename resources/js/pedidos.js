@@ -59,7 +59,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     'Content-Type': 'application/json',
                 },
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(`Error HTTP: ${response.status} - ${text}`);
+                    });
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
                     const statusCell = currentRow?.querySelector('.status-cell');
@@ -113,7 +120,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     'Content-Type': 'application/json',
                 },
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(`Error HTTP: ${response.status} - ${text}`);
+                    });
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
                     const statusCell = currentRow?.querySelector('.status-cell');
@@ -129,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => {
                 console.error('Error:', error);
-                mostrarError('Hubo un problema: ' + error.message);
+                mostrarError('Hubo un problema al cancelar el pedido: ' + error.message);
             })
             .finally(() => {
                 if (btnConfirmarCancelar) {

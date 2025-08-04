@@ -42,6 +42,7 @@ Route::get('/pedidos', [OrderController::class, 'index'])->name('pedidos.index')
 Route::patch('/pedidos/{id}/complete', [OrderController::class, 'complete'])->name('pedidos.complete');
 Route::patch('/pedidos/{id}/cancel', [OrderController::class, 'cancel'])->name('pedidos.cancel');
 Route::get('/pedidos/{id}', [OrderController::class, 'show'])->name('pedidos.show');
+Route::get('/pedidos/{id}/pdf', [OrderController::class, 'pdf'])->name('pedidos.pdf');
 
 // Rutas de usuarios (admin)
 Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios');
