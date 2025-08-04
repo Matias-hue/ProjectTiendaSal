@@ -39,9 +39,13 @@ Route::delete('/productos/{id}', [ProductoController::class, 'destroy'])->name('
 
 // Rutas de pedidos (admin)
 Route::get('/pedidos', [OrderController::class, 'index'])->name('pedidos.index');
+Route::get('/pedidos/create', [OrderController::class, 'create'])->name('pedidos.create');
+Route::post('/pedidos', [OrderController::class, 'store'])->name('pedidos.store');
+Route::get('/pedidos/{id}', [OrderController::class, 'show'])->name('pedidos.show');
+Route::get('/pedidos/{id}/edit', [OrderController::class, 'edit'])->name('pedidos.edit');
+Route::put('/pedidos/{id}', [OrderController::class, 'update'])->name('pedidos.update');
 Route::patch('/pedidos/{id}/complete', [OrderController::class, 'complete'])->name('pedidos.complete');
 Route::patch('/pedidos/{id}/cancel', [OrderController::class, 'cancel'])->name('pedidos.cancel');
-Route::get('/pedidos/{id}', [OrderController::class, 'show'])->name('pedidos.show');
 Route::get('/pedidos/{id}/pdf', [OrderController::class, 'pdf'])->name('pedidos.pdf');
 
 // Rutas de usuarios (admin)

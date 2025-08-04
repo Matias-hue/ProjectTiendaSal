@@ -4,7 +4,7 @@
     "name": "index"
   },
   "resources/js/app.js": {
-    "file": "assets/app-D4LQUTp8.js",
+    "file": "assets/app-D9BHyqIQ.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -22,13 +22,13 @@
     ]
   },
   "resources/js/inventario.js": {
-    "file": "assets/inventario-Dp7XWfmr.js",
+    "file": "assets/inventario-5DmQX6eG.js",
     "name": "inventario",
     "src": "resources/js/inventario.js",
     "isEntry": true
   },
   "resources/js/pedidos.js": {
-    "file": "assets/pedidos-Cim7EMg_.js",
+    "file": "assets/pedidos-CeBsuYK6.js",
     "name": "pedidos",
     "src": "resources/js/pedidos.js",
     "isEntry": true

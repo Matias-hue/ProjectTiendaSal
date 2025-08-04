@@ -48,6 +48,7 @@ class CartController extends Controller
         }
 
         session(['carrito' => $carrito]);
+        $this->logActivity('agregar_al_carrito', "Añadió producto #{$producto->id} al carrito");
         Log::info('Producto añadido al carrito', ['carrito' => $carrito]);
         return redirect()->route('cart')->with('success', 'Producto añadido al carrito.');
     }
@@ -58,6 +59,7 @@ class CartController extends Controller
         if (isset($carrito[$index])) {
             unset($carrito[$index]);
             session(['carrito' => array_values($carrito)]);
+            $this->logActivity('eliminar_del_carrito', "Eliminó producto en índice {$index} del carrito");
             Log::info('Producto eliminado del carrito', ['index' => $index, 'carrito' => $carrito]);
         }
         return redirect()->route('cart')->with('success', 'Producto eliminado del carrito.');
@@ -101,6 +103,7 @@ class CartController extends Controller
 
             session()->forget('carrito');
             DB::commit();
+            $this->logActivity('realizar_compra', "Creó el pedido #{$order->id} desde el carrito");
             Log::info('Checkout completado', ['order_id' => $order->id]);
             return redirect()->route('cart')->with('success', 'Compra realizada con éxito.');
         } catch (\Exception $e) {
