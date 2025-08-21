@@ -25,6 +25,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Usuario</th>
+                                    <th>Correo</th>
                                     <th>Télefono</th>
                                     <th>Dirección</th>
                                     <th>Rol</th>
@@ -36,6 +37,7 @@
                                     <tr>
                                         <td>{{ $usuario->id }}</td>
                                         <td>{{ $usuario->name ?? 'No disponible' }}</td>
+                                        <td>{{ $usuario->email ?? 'No disponible' }}</td>
                                         <td>{{ $usuario->phone ?? 'No disponible' }}</td>
                                         <td>{{ $usuario->address ?? 'No disponible '}}</td>
                                         <td>{{ $usuario->role ?? 'Usuario' }}</td>

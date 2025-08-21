@@ -69,6 +69,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 tdName.textContent = usuario.name || 'No disponible';
                 tr.appendChild(tdName);
 
+                const tdEmail = document.createElement('td');
+                tdEmail.textContent = usuario.email || 'No disponible';
+                tr.appendChild(tdEmail);
+
                 const tdPhone = document.createElement('td');
                 tdPhone.textContent = usuario.phone || 'No disponible';
                 tr.appendChild(tdPhone);

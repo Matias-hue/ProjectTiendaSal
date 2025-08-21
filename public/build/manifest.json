@@ -4,7 +4,7 @@
     "name": "index"
   },
   "resources/js/app.js": {
-    "file": "assets/app-BpfyJSer.js",
+    "file": "assets/app-CBfDW_-p.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -52,13 +52,13 @@
     "isEntry": true
   },
   "resources/js/usuarios.js": {
-    "file": "assets/usuarios-CVBnSPj8.js",
+    "file": "assets/usuarios-BezY1ui1.js",
     "name": "usuarios",
     "src": "resources/js/usuarios.js",
     "isEntry": true
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-B7nyrIRw.css",
+    "file": "assets/app-Loje6Odz.css",
     "src": "resources/sass/app.scss",
     "isEntry": true
   }
