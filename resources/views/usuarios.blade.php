@@ -35,9 +35,9 @@
                                 @foreach($usuarios as $usuario)
                                     <tr>
                                         <td>{{ $usuario->id }}</td>
-                                        <td>{{ $usuario->name }}</td>
+                                        <td>{{ $usuario->name ?? 'No disponible' }}</td>
                                         <td>{{ $usuario->phone ?? 'No disponible' }}</td>
-                                        <td>{{ $usuario->adress ?? 'No disponible '}}</td>
+                                        <td>{{ $usuario->address ?? 'No disponible '}}</td>
                                         <td>{{ $usuario->role ?? 'Usuario' }}</td>
                                         <td>
                                             <a href="{{ route('usuarios.edit', $usuario->id) }}" class="btn-editar" aria-label="Editar usuario {{ $usuario->name }}">Editar</a>

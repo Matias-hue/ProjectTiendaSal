@@ -2,9 +2,12 @@
 
 @section('content')
     @include('layouts.header')
-    <div class="py-4 px-8 text-sm text-gray-500">Editar Usuario</div>
-    <main class="px-8">
-        <h2 class="text-3xl font-bold mb-6">Editar Usuario #{{ $usuario->id }}</h2>
+    <div class="section-header">Editar Usuario</div>
+    <main class="main-container">
+        <div class="button-container">
+            <h2 class="title-large">Editar Usuario #{{ $usuario->id }}</h2>
+            <a href="{{ route('usuarios.index') }}" class="btn-volver-usuarios"> < </a>
+        </div>
         <div class="container-registro">
             <div class="card-body-registro">
                 @if (session('success'))
