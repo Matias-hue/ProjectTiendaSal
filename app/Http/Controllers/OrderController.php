@@ -23,14 +23,14 @@ class OrderController extends Controller
     public function show($id)
     {   
         $pedido = Order::with(['user', 'items.product'])->findOrFail($id);
-        return view('pedidos-show', compact('pedido'));
+        return view('carpeta-pedidos.pedidos-show', compact('pedido')); 
     }
 
     public function create()
     {
         $usuarios = User::all();
         $productos = Producto::all();
-        return view('pedidos-create', compact('usuarios', 'productos'));
+        return view('carpeta-pedidos.pedidos-create', compact('usuarios', 'productos')); 
     }
 
     public function store(Request $request)
@@ -81,7 +81,7 @@ class OrderController extends Controller
     {
         $pedido = Order::with(['user', 'items.product'])->findOrFail($id);
         $productos = Producto::all();
-        return view('pedidos-edit', compact('pedido', 'productos'));
+        return view('carpeta-pedidos.pedidos-edit', compact('pedido', 'productos')); 
     }
 
     public function update(Request $request, $id)
@@ -179,7 +179,7 @@ class OrderController extends Controller
     {
         try {
             $pedido = Order::with(['user', 'items.product'])->findOrFail($id);
-            $pdf = Pdf::loadView('pedidos-pdf', compact('pedido'));
+            $pdf = Pdf::loadView('carpeta-pedidos.pedidos-pdf', compact('pedido'));
             return $pdf->download('pedido-' . $pedido->id . '.pdf');
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error al generar el PDF: ' . $e->getMessage()], 500);

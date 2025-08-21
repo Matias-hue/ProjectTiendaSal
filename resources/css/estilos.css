@@ -415,9 +415,9 @@ th {
     text-align: center;
     transition: background-color 0.3s, transform 0.2s;
     width: 100%;
-    max-width: 50rem; /* Igual al max-width de .container-inventario */
-    margin: 1.25rem auto 0; /* Centra el botón y añade margen superior */
-    box-sizing: border-box; /* Asegura que el padding no aumente el ancho */
+    max-width: 50rem; 
+    margin: 1.25rem auto 0; 
+    box-sizing: border-box; 
 }
 
 .btn-agregar:hover {
