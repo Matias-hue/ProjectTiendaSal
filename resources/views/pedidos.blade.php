@@ -31,7 +31,7 @@
                                 <td class="border border-gray-300 p-2 status-cell">
                                     {{ ucfirst(strtolower($pedido->status)) }}
                                 </td>
-                                <td class="border border-gray-300 p-2">
+                                <td class="border border-gray-300 p-2 action-cell">
                                     @if ($pedido->status === 'Pendiente')
                                         <button class="btn-completar" data-id="{{ $pedido->id }}" aria-label="Marcar pedido #{{ $pedido->id }} como completado">Marcar como Completado</button>
                                         <button class="btn-cancelar" data-id="{{ $pedido->id }}" aria-label="Cancelar pedido #{{ $pedido->id }}">Cancelar</button>
