@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnConfirmarCancelar = document.getElementById('btn-confirmar-cancelar');
     const mensajeError = document.getElementById('mensaje-error');
     const mensajeSuccess = document.getElementById('mensaje-success');
+    const userSearch = document.getElementById('user_search');
+    const userIdInput = document.getElementById('user_id');
+    const userSuggestions = document.getElementById('user-suggestions');
 
     let currentOrderId;
     let currentRow;
@@ -30,6 +33,67 @@ document.addEventListener('DOMContentLoaded', function () {
             mensajeSuccess.textContent = mensaje;
             dialogSuccess.showModal();
         }
+    }
+
+    // Búsqueda de usuarios
+    if (userSearch && userSuggestions) {
+        let timeout = null;
+        userSearch.addEventListener('input', function () {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                const query = userSearch.value.trim();
+                if (query.length < 2) {
+                    userSuggestions.innerHTML = '';
+                    userSuggestions.style.display = 'none';
+                    return;
+                }
+                fetch(`/usuarios?search=${encodeURIComponent(query)}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                    },
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    userSuggestions.innerHTML = '';
+                    if (data.data.length === 0) {
+                        userSuggestions.innerHTML = '<div class="suggestion-item">No se encontraron usuarios</div>';
+                        userSuggestions.style.display = 'block';
+                        return;
+                    }
+                    data.data.forEach(usuario => {
+                        const div = document.createElement('div');
+                        div.className = 'suggestion-item';
+                        div.textContent = `${usuario.name || 'No disponible'} (${usuario.email})`;
+                        div.dataset.userId = usuario.id;
+                        div.addEventListener('click', () => {
+                            userSearch.value = `${usuario.name || 'No disponible'} (${usuario.email})`;
+                            userIdInput.value = usuario.id;
+                            userSuggestions.innerHTML = '';
+                            userSuggestions.style.display = 'none';
+                        });
+                        userSuggestions.appendChild(div);
+                    });
+                    userSuggestions.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error fetching users:', error);
+                    userSuggestions.innerHTML = '<div class="suggestion-item">Error al buscar usuarios</div>';
+                    userSuggestions.style.display = 'block';
+                });
+            }, 300);
+        });
+
+        // Ocultar sugerencias al hacer clic fuera
+        document.addEventListener('click', function (e) {
+            if (!userSearch.contains(e.target) && !userSuggestions.contains(e.target)) {
+                userSuggestions.innerHTML = '';
+                userSuggestions.style.display = 'none';
+            }
+        });
     }
 
     // Botones de completar
@@ -82,6 +146,10 @@ document.addEventListener('DOMContentLoaded', function () {
     orderForms.forEach(form => {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
+            if (!userIdInput.value) {
+                mostrarError('Por favor, selecciona un usuario.');
+                return;
+            }
             const items = Array.from(form.querySelectorAll('.item-quantity')).map((input, index) => {
                 const productSelect = form.querySelectorAll('.item-product')[index];
                 const stock = parseInt(productSelect.selectedOptions[0].dataset.stock);
@@ -106,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    user_id: form.querySelector('#user_id')?.value,
+                    user_id: form.querySelector('#user_id').value,
                     items: items
                 })
             })

@@ -2,10 +2,10 @@
 
 @section('content')
     @include('layouts.header')
-    <div class="py-4 px-8 text-sm text-gray-500">Crear Pedido</div>
-    <main class="px-8">
+    <div class="section-header">Crear Pedido</div>
+    <main class="main-container">
         <div class="button-container">
-            <h2 class="text-3xl font-bold mb-6">Crear Nuevo Pedido</h2>
+            <h2 class="title-large">Crear Nuevo Pedido</h2>
             <a href="{{ route('pedidos.index') }}" class="btn-volver-pedidos"> < </a>
         </div>
         <div class="container-registro">
@@ -19,12 +19,10 @@
                 <form id="create-order-form" method="POST" action="{{ route('pedidos.store') }}">
                     @csrf
                     <div class="input-search-registro">
-                        <label for="user_id">Usuario</label>
-                        <select name="user_id" id="user_id" required>
-                            @foreach ($usuarios as $usuario)
-                                <option value="{{ $usuario->id }}">{{ $usuario->name }} ({{ $usuario->email }})</option>
-                            @endforeach
-                        </select>
+                        <label for="user_search">Usuario</label>
+                        <input type="text" id="user_search" name="user_search" placeholder="Buscar usuario por nombre o email..." autocomplete="off">
+                        <input type="hidden" id="user_id" name="user_id" required>
+                        <div id="user-suggestions" class="user-suggestions"></div>
                     </div>
                     <h3>Productos</h3>
                     <table class="pedidos-table" id="items-table">
