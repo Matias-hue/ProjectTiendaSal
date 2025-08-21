@@ -25,6 +25,8 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Usuario</th>
+                                    <th>Télefono</th>
+                                    <th>Dirección</th>
                                     <th>Rol</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -34,6 +36,8 @@
                                     <tr>
                                         <td>{{ $usuario->id }}</td>
                                         <td>{{ $usuario->name }}</td>
+                                        <td>{{ $usuario->phone ?? 'No disponible' }}</td>
+                                        <td>{{ $usuario->adress ?? 'No disponible '}}</td>
                                         <td>{{ $usuario->role ?? 'Usuario' }}</td>
                                         <td>
                                             <a href="{{ route('usuarios.edit', $usuario->id) }}" class="btn-editar" aria-label="Editar usuario {{ $usuario->name }}">Editar</a>
