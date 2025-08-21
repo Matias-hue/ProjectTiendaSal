@@ -4,7 +4,10 @@
     @include('layouts.header')
     <div class="py-4 px-8 text-sm text-gray-500">Editar Pedido</div>
     <main class="px-8">
-        <h2 class="text-3xl font-bold mb-6">Editar Pedido #{{ $pedido->id }}</h2>
+        <div class="button-container">
+            <h2 class="text-3xl font-bold mb-6">Editar Pedido #{{ $pedido->id }}</h2>
+            <a href="{{ route('pedidos.index') }}" class="btn-volver-pedidos"> < </a>
+        </div>
         <div class="container-registro">
             <div class="card-body-registro">
                 @if (session('success'))

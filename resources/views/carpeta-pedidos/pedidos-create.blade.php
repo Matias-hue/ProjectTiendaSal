@@ -3,9 +3,11 @@
 @section('content')
     @include('layouts.header')
     <div class="py-4 px-8 text-sm text-gray-500">Crear Pedido</div>
-        <a href="{{ route('productos') }}" class="btn-volver-pedidos"> < </a>
     <main class="px-8">
-        <h2 class="text-3xl font-bold mb-6">Crear Nuevo Pedido</h2>
+        <div class="button-container">
+            <h2 class="text-3xl font-bold mb-6">Crear Nuevo Pedido</h2>
+            <a href="{{ route('pedidos.index') }}" class="btn-volver-pedidos"> < </a>
+        </div>
         <div class="container-registro">
             <div class="card-body-registro">
                 @if (session('success'))
