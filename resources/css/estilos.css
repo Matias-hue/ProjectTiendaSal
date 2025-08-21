@@ -266,19 +266,47 @@ header, footer {
     font-weight: bold; 
 }
 
+.botones-accion-carrito {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
 .btn-proceder {
-    margin-top: 1rem; 
-    display: block; 
-    background-color: #4caf50; 
-    color: white; 
-    padding: 0.5rem 1rem; 
+    margin-top: 1rem;
+    background-color: #4caf50;
+    color: white;
+    padding: 0.5rem 1rem;
     border-radius: 0.5rem;
-    text-align: center; 
-    transition: background-color 0.3s; 
+    border: none; 
+    text-align: center;
+    transition: background-color 0.3s;
+    font-size: 1rem; 
+    line-height: 1.5; 
+    display: inline-block; 
 }
 
 .btn-proceder:hover {
     background-color: #388e3c;
+}
+
+.btn-volver-carrito {
+    margin-top: 1rem;
+    background-color: #969696;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none; 
+    text-align: center;
+    transition: background-color 0.3s;
+    font-size: 1rem; 
+    line-height: 1.5; 
+    display: inline-block; 
+    text-decoration: none; 
+}
+
+.btn-volver-carrito:hover {
+    background-color: #474747;
 }
 
 /* Mapa */

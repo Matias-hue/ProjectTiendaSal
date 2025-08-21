@@ -37,10 +37,14 @@
                 <div class="mt-4">
                     <p class="font-bold">Total: ${{ number_format(collect($carrito)->sum(fn($item) => $item['precio'] * $item['cantidad']), 2) }}</p>
                 </div>
-                <form action="{{ route('checkout') }}" method="POST" class="mt-4">
-                    @csrf
-                    <button type="submit" class="btn-proceder">Proceder al Pago</button>
-                </form>
+                <div class="botones-accion-carrito">
+                    <form action="{{ route('checkout') }}" method="POST" class="mt-4">
+                        @csrf
+                        <button type="submit" class="btn-proceder">Proceder al Pago</button>
+                    </form>
+                        <a href="{{ route('productos') }}" class="btn-volver-carrito">Volver</a>
+                </div>
+                
             @else
                 <p class="mensaje-vacio">Tu carrito está vacío.</p>
             @endif

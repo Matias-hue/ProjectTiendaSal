@@ -264,9 +264,14 @@ header, footer {
     font-weight: bold; 
 }
 
+.botones-accion-carrito {
+    display: flex;
+    justify-content: space-between;
+}
+
 .btn-proceder {
     margin-top: 1rem; 
-    display: block; 
+    display: left; 
     background-color: #4caf50; 
     color: white; 
     padding: 0.5rem 1rem; 
@@ -277,6 +282,17 @@ header, footer {
 
 .btn-proceder:hover {
     background-color: #388e3c;
+}
+
+.btn-volver-carrito {
+    margin-top: 1rem; 
+    display: right; 
+    background-color: #4caf50; 
+    color: white; 
+    padding: 0.5rem 1rem; 
+    border-radius: 0.5rem;
+    text-align: center; 
+    transition: background-color 0.3s; 
 }
 
 /* Mapa */
