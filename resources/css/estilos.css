@@ -462,7 +462,7 @@ dialog {
 }
 
 .btn-crear-pedido {
-    display: block; /* Cambiado de inline-block a block para ocupar todo el ancho */
+    display: block; 
     background: #1e3a8a;
     color: #fff;
     padding: 0.75rem 1.5rem;
@@ -473,8 +473,7 @@ dialog {
     font-weight: 500;
     text-align: center;
     transition: background-color 0.3s, transform 0.2s;
-    width: 100%; /* Mantener width: 100% */
-    /* Eliminado max-width: 20rem para permitir que ocupe todo el contenedor */
+    width: 100%; 
 }
 
 .btn-crear-pedido:hover {
@@ -585,7 +584,7 @@ dialog {
 }
 
 .mb-4 {
-    display: block; /* Cambiado de flex a block para que el botón ocupe todo el ancho */
+    display: block; 
     margin-bottom: 1.5rem;
 }
 

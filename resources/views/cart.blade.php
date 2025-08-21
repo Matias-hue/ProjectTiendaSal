@@ -47,6 +47,7 @@
                 
             @else
                 <p class="mensaje-vacio">Tu carrito está vacío.</p>
+                <a href="{{ route('productos') }}" class="btn-volver-carrito">Volver</a>
             @endif
         </div>
     </main>
