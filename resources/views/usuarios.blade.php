@@ -53,7 +53,6 @@
                 @endif
             </div>
         </div>
-        <script src="{{ asset('js/usuarios.js') }}"></script>
     </main>
     @include('layouts.footer')
 @endsection

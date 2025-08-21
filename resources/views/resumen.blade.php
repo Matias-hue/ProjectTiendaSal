@@ -33,6 +33,4 @@
         window.productosLabels = @json($productosLabels ?? []);
         window.productosData = @json($productosData ?? []);
     </script>
-
-    <script src="{{ asset('js/resumen.js') }}"></script>
 @endsection

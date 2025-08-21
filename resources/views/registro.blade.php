@@ -38,7 +38,4 @@
         </div>
     </main>
     @include('layouts.footer')
-
-    <link rel="stylesheet" href="{{ asset('css/registro.css') }}">
-    <script src="{{ asset('js/registro.js') }}"></script>
 @endsection

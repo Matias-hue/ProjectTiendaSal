@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             tbody.innerHTML = '';
             if (data.data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No se encontraron usuarios</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No se encontraron usuarios</td></tr>';
                 return;
             }
             data.data.forEach(usuario => {
@@ -66,15 +66,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 tr.appendChild(tdId);
 
                 const tdName = document.createElement('td');
-                tdName.textContent = usuario.name;
+                tdName.textContent = usuario.name || 'No disponible';
                 tr.appendChild(tdName);
+
+                const tdPhone = document.createElement('td');
+                tdPhone.textContent = usuario.phone || 'No disponible';
+                tr.appendChild(tdPhone);
+
+                const tdAddress = document.createElement('td');
+                tdAddress.textContent = usuario.address || 'No disponible';
+                tr.appendChild(tdAddress);
 
                 const tdRole = document.createElement('td');
                 tdRole.textContent = usuario.role || 'Usuario';
                 tr.appendChild(tdRole);
 
                 const tdAcciones = document.createElement('td');
-                tdAcciones.innerHTML = `<a href="/usuarios/${usuario.id}/edit" class="btn-editar" aria-label="Editar usuario ${usuario.name}">Editar</a>`;
+                tdAcciones.innerHTML = `<a href="/usuarios/${usuario.id}/edit" class="btn-editar" aria-label="Editar usuario ${usuario.name || 'No disponible'}">Editar</a>`;
                 tr.appendChild(tdAcciones);
 
                 tbody.appendChild(tr);
@@ -87,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => {
             console.error('Error fetching users:', error);
-            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Error al cargar usuarios</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Error al cargar usuarios</td></tr>';
         });
     }
 });

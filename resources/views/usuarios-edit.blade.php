@@ -48,5 +48,4 @@
         </div>
     </main>
     @include('layouts.footer')
-    <script src="{{ asset('js/usuarios.js') }}"></script>
 @endsection

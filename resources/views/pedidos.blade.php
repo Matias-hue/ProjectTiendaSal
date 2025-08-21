@@ -93,5 +93,4 @@
         </dialog>
     </main>
     @include('layouts.footer')
-    <script src="{{ asset('js/pedidos.js') }}"></script>
 @endsection
