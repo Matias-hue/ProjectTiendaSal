@@ -19,6 +19,7 @@
                 <form id="edit-order-form" method="POST" action="{{ route('pedidos.update', $pedido->id) }}">
                     @csrf
                     @method('PUT')
+                    <input type="hidden" id="user_id" name="user_id" value="{{ $pedido->user_id }}">
                     <h3>Datos del Cliente</h3>
                     <p><strong>Nombre:</strong> {{ $pedido->user->name }}</p>
                     <p><strong>Email:</strong> {{ $pedido->user->email }}</p>
