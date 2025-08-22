@@ -16,6 +16,13 @@ html, body {
     flex: 1;
 }
 
+button:disabled,
+.btn-agregar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
 .dashboard-container {
     width: 16rem;
     flex-shrink: 0;

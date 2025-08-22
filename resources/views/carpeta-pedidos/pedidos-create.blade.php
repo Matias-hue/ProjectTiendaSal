@@ -52,7 +52,7 @@
                         </tbody>
                     </table>
                     <button type="button" id="add-item" class="btn-agregar">Agregar Producto</button>
-                    <button type="submit" class="btn-agregar">Crear Pedido</button>
+                    <button type="submit" id="btn-agregar-pedido" class="btn-agregar">Crear Pedido</button>
                 </form>
             </div>
         </div>

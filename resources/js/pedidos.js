@@ -146,10 +146,27 @@ document.addEventListener('DOMContentLoaded', function () {
     orderForms.forEach(form => {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
+
+            // botón de submit
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = form.id === 'create-order-form'
+                    ? 'Creando pedido...'
+                    : 'Guardando cambios...';
+            }
+
             if (!userIdInput.value) {
                 mostrarError('Por favor, selecciona un usuario.');
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = form.id === 'create-order-form'
+                        ? 'Crear Pedido'
+                        : 'Guardar Cambios';
+                }
                 return;
             }
+
             const items = Array.from(form.querySelectorAll('.item-quantity')).map((input, index) => {
                 const productSelect = form.querySelectorAll('.item-product')[index];
                 const stock = parseInt(productSelect.selectedOptions[0].dataset.stock);
@@ -164,7 +181,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 };
             });
 
-            if (items.includes(null)) return;
+            if (items.includes(null)) {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = form.id === 'create-order-form'
+                        ? 'Crear Pedido'
+                        : 'Guardar Cambios';
+                }
+                return;
+            }
 
             fetch(form.action, {
                 method: form.querySelector('input[name="_method"]')?.value || form.method,
@@ -192,14 +217,29 @@ document.addEventListener('DOMContentLoaded', function () {
                     setTimeout(() => window.location.href = '/pedidos', 1000);
                 } else {
                     mostrarError(data.error || 'No se pudo procesar el pedido.');
+                    // Si falla, reactivar botón
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = form.id === 'create-order-form'
+                            ? 'Crear Pedido'
+                            : 'Guardar Cambios';
+                    }
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
                 mostrarError('Hubo un problema: ' + error.message);
+                // Si hay error, reactivar botón
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = form.id === 'create-order-form'
+                        ? 'Crear Pedido'
+                        : 'Guardar Cambios';
+                }
             });
         });
     });
+
 
     // Agregar ítems en formularios
     const addItemButton = document.getElementById('add-item');

@@ -4,7 +4,16 @@
             <h2 class="dashboard-title">📊 Dashboard</h2>
             <ul class="dashboard-list">
                 <li><a href="{{ route('resumen') }}" class="dashboard-link">📈 Resumen</a></li>
-                <li><a href="{{ route('inventario') }}" class="dashboard-link">📦 Inventario</a></li>
+                <li>
+                    <a href="{{ route('inventario') }}" class="dashboard-link">
+                    📦 Inventario
+                    @php
+                        $lowStockCount = App\Models\Producto::where('stock', '<=', 100)->count();
+                    @endphp
+                    @if($lowStockCount > 0)
+                            <span class="badge">{{ $lowStockCount }}</span>
+                        @endif
+                    </a></li>
                 <li>
                     <a href="{{ route('pedidos.index') }}" class="dashboard-link">
                         🛒 Pedidos
