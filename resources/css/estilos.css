@@ -29,6 +29,57 @@ main {
     margin-bottom: 0;
 }
 
+/* Botón hamburguesa para mostrar/ocultar dashboard */
+.navbar-toggler {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000;
+    color: #4b5563;
+    transition: color 0.3s;
+}
+
+.navbar-toggler:hover {
+    color: #1e3a8a;
+}
+
+.navbar-toggler-icon {
+    display: inline-block;
+    font-size: 1.5rem;
+    line-height: 1;
+    font-weight: bold;
+}
+
+/* Botón para guardar el dashboard */
+.btn-toggle-dashboard {
+    display: inline-block;
+    background: #1e3a8a;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-size: 0.875rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.btn-toggle-dashboard:hover {
+    background: #1e40af;
+    transform: translateY(-0.125rem);
+}
+
+.btn-toggle-dashboard:focus {
+    outline: 2px solid #1e40af;
+    outline-offset: 2px;
+}
+
 /* Header y Footer */
 header, footer {
     background-color: #f3f4f6;
@@ -153,42 +204,92 @@ header, footer {
 
 /* Dashboard */
 .dashboard-sidebar {
-    width: 16rem; 
-    background-color: #f3f4f6; 
-    padding: 1.5rem; 
-    box-shadow: 0.125rem 0 0.3125rem rgba(0, 0, 0, 0.1); 
+    width: 16rem;
+    background-color: #e5e7eb;
+    padding: 1rem;
+    box-shadow: 0.125rem 0 0.3125rem rgba(0, 0, 0, 0.1);
     border-right: 0.125rem solid #d1d5db;
+    height: 100vh; /* Ocupa toda la altura del viewport */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente el contenido */
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease; /* Animación para ocultar/mostrar */
+    transform: translateX(0); /* Visible por defecto */
+}
+
+.dashboard-sidebar:not(.active) {
+    transform: translateX(-100%); /* Oculta el sidebar moviéndolo fuera de la vista */
 }
 
 .dashboard-content {
-    margin-top: 12rem;
+    margin: 0;
 }
 
-.dashboard-sidebar h2 {
-    font-size: 1.5rem; 
-    font-weight: bold; 
-    margin-bottom: 1.5rem; 
+.dashboard-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
 }
 
-.dashboard-sidebar ul {
-    list-style-type: none; 
-    padding: 0; 
+.dashboard-list {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 1rem;
 }
 
-.dashboard-sidebar a {
-    display: block; 
-    padding: 0.5rem 0; 
-    color: #4a5568; 
-    text-decoration: none; 
-    transition: color 0.3s; 
+.dashboard-list li {
+    margin-bottom: 1rem;
 }
 
-.dashboard-sidebar a:hover {
-    color: #3182ce; 
+.dashboard-link {
+    display: block;
+    padding: 0.5rem 0;
+    color: #4a5568;
+    text-decoration: none;
+    font-size: 1.125rem;
+    transition: color 0.3s;
 }
 
-.dashboard-sidebar li {
-    margin-bottom: 0.5rem; 
+.dashboard-link:hover {
+    color: #2563eb;
+}
+
+.badge {
+    display: inline-block;
+    background-color: #ef4444;
+    color: #ffffff;
+    font-size: 0.75rem;
+    border-radius: 9999px;
+    padding: 0.25rem 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.btn-toggle-dashboard {
+    display: block;
+    background: #1e3a8a;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-bottom: 1rem;
+}
+
+.btn-toggle-dashboard:hover {
+    background: #1e40af;
+    transform: translateY(-0.125rem);
+}
+
+.btn-toggle-dashboard:focus {
+    outline: 2px solid #1e40af;
+    outline-offset: 2px;
 }
 
 /* Productos */
@@ -302,7 +403,6 @@ header, footer {
     font-size: 1rem; 
     line-height: 1.5; 
     display: inline-block; 
-    text-decoration: none; 
 }
 
 .btn-volver-carrito:hover {
@@ -364,7 +464,6 @@ th {
     transition: background-color 0.3s, color 0.3s, transform 0.2s;
     font-size: 0.875rem;
     text-align: center;
-    text-decoration: none;
 }
 
 .btn-editar-tabla:hover {
@@ -409,7 +508,6 @@ th {
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 0.375rem;
-    text-decoration: none;
     font-size: 1.125rem;
     font-weight: 500;
     text-align: center;
@@ -530,7 +628,6 @@ th {
     transition: background-color 0.3s, color 0.3s, transform 0.2s;
     font-size: 0.875rem;
     text-align: center;
-    text-decoration: none;
 }
 
 .btn-editar-tabla:hover {
@@ -575,7 +672,6 @@ th {
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 0.375rem;
-    text-decoration: none;
     font-size: 1.125rem;
     font-weight: 500;
     text-align: center;
@@ -669,7 +765,6 @@ dialog {
     transition: background-color 0.3s;
     font-size: 1rem;
     line-height: 1.5;
-    text-decoration: none;
     display: inline-block;
 }
 
@@ -710,7 +805,6 @@ dialog {
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 0.375rem;
-    text-decoration: none;
     font-size: 1.125rem;
     font-weight: 500;
     text-align: center;
@@ -789,7 +883,6 @@ dialog {
     transition: background-color 0.3s, color 0.3s, transform 0.2s;
     font-size: 0.875rem;
     text-align: center;
-    text-decoration: none;
 }
 
 .btn-editar:hover {
@@ -913,7 +1006,6 @@ dialog {
     padding: 0.375rem 1rem;
     border: none;
     border-radius: 0.375rem;
-    text-decoration: none;
     font-size: 0.875rem;
     font-weight: 500;
     text-align: center;
@@ -963,7 +1055,6 @@ dialog {
     transition: background-color 0.3s;
     font-size: 1rem;
     line-height: 1.5;
-    text-decoration: none;
 }
 
 .section-header {
@@ -1006,7 +1097,6 @@ dialog {
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 0.5rem;
-    text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
     text-align: center;
@@ -1080,7 +1170,6 @@ dialog {
     border: 1px solid #d1d5db;
     border-radius: 4px;
     color: #374151;
-    text-decoration: none;
     transition: background-color 0.2s;
 }
 
@@ -1097,4 +1186,30 @@ dialog {
 .pagination .disabled .page-link {
     color: #9ca3af;
     cursor: not-allowed;
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .container-inventario, .pedidos-container, .container-usuarios, .container-registro {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+
+    .producto-imagen {
+        height: 8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-sidebar {
+        width: 100%;
+    }
+
+    .producto-imagen {
+        height: 6rem;
+    }
+
+    .input-search-registro {
+        min-width: 100%;
+    }
 }

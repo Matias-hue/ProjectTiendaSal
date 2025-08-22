@@ -25,18 +25,19 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    
 </head>
 <body>
     <div id="app" class="flex"> 
+        @if(auth()->check() && auth()->user()->role === 'admin')
+            <button class="navbar-toggler" type="button" aria-label="Toggle dashboard">
+                <span class="navbar-toggler-icon">=</span>
+            </button>
+        @endif
+        
         @include('layouts.dashboard') 
         
         <div class="flex-1"> 
             <div class="container">
-                <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}" style="margin: 0; padding: 0;">
-                    <span class="navbar-toggler-icon"></span>
-                </button> -->
-
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
                         @guest
