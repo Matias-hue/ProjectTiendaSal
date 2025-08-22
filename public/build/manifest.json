@@ -4,7 +4,7 @@
     "name": "index"
   },
   "resources/js/app.js": {
-    "file": "assets/app-CBfDW_-p.js",
+    "file": "assets/app-C2Koxf54.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -28,7 +28,7 @@
     "isEntry": true
   },
   "resources/js/pedidos.js": {
-    "file": "assets/pedidos-CeBsuYK6.js",
+    "file": "assets/pedidos-0g08ajZU.js",
     "name": "pedidos",
     "src": "resources/js/pedidos.js",
     "isEntry": true
@@ -58,7 +58,7 @@
     "isEntry": true
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-Loje6Odz.css",
+    "file": "assets/app-DwzJuSps.css",
     "src": "resources/sass/app.scss",
     "isEntry": true
   }
