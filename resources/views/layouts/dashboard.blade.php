@@ -1,6 +1,5 @@
 @if(auth()->check() && auth()->user()->role === 'admin')
     <aside class="dashboard-sidebar">
-        <button class="btn-toggle-dashboard">Ocultar Dashboard</button>
         <div class="dashboard-content">
             <h2 class="dashboard-title">📊 Dashboard</h2>
             <ul class="dashboard-list">

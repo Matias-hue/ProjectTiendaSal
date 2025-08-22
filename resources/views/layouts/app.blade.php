@@ -32,9 +32,10 @@
             <button class="navbar-toggler" type="button" aria-label="Toggle dashboard">
                 <span class="navbar-toggler-icon">=</span>
             </button>
+            <div class="dashboard-container">
+                @include('layouts.dashboard') 
+            </div>
         @endif
-        
-        @include('layouts.dashboard') 
         
         <div class="flex-1"> 
             <div class="container">
