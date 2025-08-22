@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'GMT',
+    'timezone' => 'America/Argentina/Buenos_Aires',
 
     /*
     |--------------------------------------------------------------------------
