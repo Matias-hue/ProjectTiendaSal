@@ -18,6 +18,9 @@
                     <input type="text" id="search" name="search" placeholder="Buscar por nombre o email..." value="{{ request('search') }}">
                     <button type="submit" class="btn-buscar" aria-label="Buscar usuarios">Buscar</button>
                 </form>
+                <div class="button-container">
+                    <a href="{{ route('usuarios.create') }}" class="btn-crear-usuario" aria-label="Crear un nuevo usuario">Crear Usuario</a>
+                </div>
                 @if ($usuarios->isEmpty())
                     <p class="no-data">No hay usuarios disponibles.</p>
                 @else
@@ -28,7 +31,7 @@
                                     <th>ID</th>
                                     <th>Usuario</th>
                                     <th>Correo</th>
-                                    <th>Télefono</th>
+                                    <th>Teléfono</th>
                                     <th>Dirección</th>
                                     <th>Rol</th>
                                     <th>Acciones</th>
@@ -41,10 +44,11 @@
                                         <td>{{ $usuario->name ?? 'No disponible' }}</td>
                                         <td>{{ $usuario->email ?? 'No disponible' }}</td>
                                         <td>{{ $usuario->phone ?? 'No disponible' }}</td>
-                                        <td>{{ $usuario->address ?? 'No disponible '}}</td>
+                                        <td>{{ $usuario->address ?? 'No disponible' }}</td>
                                         <td>{{ $usuario->role ?? 'Usuario' }}</td>
-                                        <td>
-                                            <a href="{{ route('usuarios.edit', $usuario->id) }}" class="btn-editar" aria-label="Editar usuario {{ $usuario->name }}">Editar</a>
+                                        <td class="action-cell">
+                                            <a href="{{ route('usuarios.edit', $usuario->id) }}" class="btn-editar" aria-label="Editar usuario {{ $usuario->name ?? 'No disponible' }}">Editar</a>
+                                            <button class="btn-eliminar" data-user-id="{{ $usuario->id }}" data-user-name="{{ $usuario->name ?? 'No disponible' }}" aria-label="Eliminar usuario {{ $usuario->name ?? 'No disponible' }}">Eliminar</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -60,5 +64,4 @@
     </main>
     @include('layouts.footer')
 @endsection
-
 @endif

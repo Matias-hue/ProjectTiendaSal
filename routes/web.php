@@ -11,11 +11,8 @@ use Illuminate\Support\Facades\Route;
 
 // Rutas generales
 Route::get('/', fn() => view('index'))->name('index');
-
 Route::get('/home', fn() => redirect()->route('index'))->name('home');
-
 Route::get('/productos', [ProductoController::class, 'publicIndex'])->name('productos');
-
 Route::get('/ubicacion', fn() => view('ubicacion'))->name('ubicacion');
 
 // Rutas de perfil
@@ -50,8 +47,11 @@ Route::get('/pedidos/{id}/pdf', [OrderController::class, 'pdf'])->name('pedidos.
 
 // Rutas de usuarios (admin)
 Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
+Route::get('/usuarios/create', [UsuarioController::class, 'create'])->name('usuarios.create');
+Route::post('/usuarios', [UsuarioController::class, 'store'])->name('usuarios.store');
 Route::get('/usuarios/{id}/edit', [UsuarioController::class, 'edit'])->name('usuarios.edit');
 Route::put('/usuarios/{id}', [UsuarioController::class, 'update'])->name('usuarios.update');
+Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
 
 // Rutas de alertas (admin)
 Route::get('/alertas', [AlertaController::class, 'index'])->name('alertas');
