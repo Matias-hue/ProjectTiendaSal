@@ -30,7 +30,15 @@
     <div id="app" class="flex"> 
         @if(auth()->check() && auth()->user()->role === 'admin')
             <button class="navbar-toggler" type="button" aria-label="Toggle dashboard">
-                <span class="navbar-toggler-icon" id="navbar-toggler">=</span>
+                <span class="navbar-toggler-icon" id="navbar-toggler">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                    <span class="badge-hamburguesa" id="alertas-badge-hamburguesa">
+                        @php
+                            $totalAlertas = App\Http\Controllers\AlertaController::getTotalAlertas();
+                        @endphp
+                        {{ $totalAlertas > 0 ? $totalAlertas : '' }}
+                    </span>
+                </span>
             </button>
             <div id="dashboard" class="dashboard-sidebar active">
                 @include('layouts.dashboard') 

@@ -91,6 +91,17 @@ button:disabled,
     margin-left: 0.5rem;
 }
 
+.badge-hamburguesa {
+    position: absolute;
+    background-color: #ef4444;
+    color: #ffffff;
+    font-size: 0.75rem;
+    border-radius: 9999px;
+    padding: 0.25rem 0.5rem;
+    left: 1rem;
+    top: -0.5rem;
+}
+
 /* ------------------ CONTENIDO ------------------ */
 .flex-1 {
     flex: 1;

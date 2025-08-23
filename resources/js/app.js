@@ -15,23 +15,28 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#dashboard .dashboard-sidebar') ||
     document.querySelector('.dashboard-sidebar');
 
-  if (!toggler || !sidebar) return;
+    const alertasBadgeHamburguesa = document.getElementById('alertas-badge-hamburguesa')
 
-  const apply = (isOpen) => {
+    if (!toggler || !sidebar || !alertasBadgeHamburguesa) return;
 
-    sidebar.classList.toggle('active', isOpen);
+    const apply = (isOpen) => {
 
-    document.body.classList.toggle('sidebar-open', isOpen);
+        sidebar.classList.toggle('active', isOpen);
 
-    localStorage.setItem('dashboardState', isOpen ? 'visible' : 'hidden');
-  };
+        document.body.classList.toggle('sidebar-open', isOpen);
 
-  const initialOpen = (localStorage.getItem('dashboardState') ?? 'visible') !== 'hidden';
-  apply(initialOpen);
+        alertasBadgeHamburguesa.style.display = isOpen ? 'none' : 'inlineblock';
 
-  toggler.addEventListener('click', (e) => {
-    e.preventDefault();
-    const isOpen = sidebar.classList.contains('active');
-    apply(!isOpen);
-  });
+        localStorage.setItem('dashboardState', isOpen ? 'visible' : 'hidden');
+    };
+
+    const initialOpen = (localStorage.getItem('dashboardState') ?? 'visible') !== 'hidden';
+    apply(initialOpen);
+
+    toggler.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isOpen = sidebar.classList.contains('active');
+        alertasBadgeHamburguesa.style.display = 'inline-block';
+        apply(!isOpen);
+    });
 });
