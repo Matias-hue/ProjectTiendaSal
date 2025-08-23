@@ -14,8 +14,8 @@ html, body {
     padding: 0;
     display: flex;
     flex: 1;
-    flex-direction: row; /* Sidebar y contenido lado a lado */
-    min-height: 100vh;   /* Todo el viewport */
+    flex-direction: row; 
+    min-height: 100vh;   
 }
 
 button:disabled,
@@ -24,7 +24,7 @@ button:disabled,
     cursor: not-allowed;
 }
 
-/* ------------------ SIDEBAR ------------------ */
+/* Sidebar  */
 .dashboard-sidebar {
     width: 16rem;
     background-color: #e5e7eb;
@@ -35,7 +35,7 @@ button:disabled,
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;         /* SIEMPRE ocupa toda la pantalla */
+    height: 100vh;         
     overflow-y: auto;
     transition: transform 0.3s ease;
     z-index: 999;
@@ -44,14 +44,12 @@ button:disabled,
     flex-direction: column;
 }
 
-/* Oculto cuando no está activo */
 .dashboard-sidebar:not(.active) {
     transform: translateX(-100%);
 }
 
-/* Contenido centrado verticalmente */
 .dashboard-content {
-    margin-block: auto; /* mismo espacio arriba/abajo */
+    margin-block: auto; 
 }
 
 .dashboard-title {
