@@ -30,14 +30,14 @@
     <div id="app" class="flex"> 
         @if(auth()->check() && auth()->user()->role === 'admin')
             <button class="navbar-toggler" type="button" aria-label="Toggle dashboard">
-                <span class="navbar-toggler-icon">=</span>
+                <span class="navbar-toggler-icon" id="navbar-toggler">=</span>
             </button>
-            <div class="dashboard-container">
+            <div id="dashboard" class="dashboard-sidebar active">
                 @include('layouts.dashboard') 
             </div>
         @endif
         
-        <div class="flex-1"> 
+        <div id="main-content" class="flex-1"> 
             <div class="container">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">

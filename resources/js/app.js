@@ -7,50 +7,35 @@ import './ubicacion.js';
 import './usuarios.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const sidebar = document.querySelector('.dashboard-sidebar');
-    const toggler = document.querySelector('.navbar-toggler');
-    const dashboardContainer = document.querySelector('.dashboard-container');
+  // Botón (puede ser el button o el span interno)
+  const toggler =
+    document.querySelector('.navbar-toggler') ||
+    document.querySelector('#navbar-toggler');
 
-    if (!sidebar || !toggler || !dashboardContainer) {
-        console.error('Uno o más elementos no se encontraron:', { sidebar, toggler, dashboardContainer });
-        return;
-    }
+  // Sidebar real (si hay wrapper + aside, toma el aside)
+  const sidebar =
+    document.querySelector('#dashboard .dashboard-sidebar') ||
+    document.querySelector('.dashboard-sidebar');
 
-    const toggleSidebar = () => {
-        const isActive = sidebar.classList.toggle('active');
-        dashboardContainer.style.display = isActive ? 'block' : 'none';
-        localStorage.setItem('dashboardState', isActive ? 'visible' : 'hidden');
-    };
+  if (!toggler || !sidebar) return;
 
-    toggler.addEventListener('click', toggleSidebar);
+  const apply = (isOpen) => {
+    // Muestra/oculta el panel
+    sidebar.classList.toggle('active', isOpen);
+    // Desplaza el contenido (CSS: body.sidebar-open .flex-1 { margin-left: 16rem; })
+    document.body.classList.toggle('sidebar-open', isOpen);
+    // Persistencia
+    localStorage.setItem('dashboardState', isOpen ? 'visible' : 'hidden');
+  };
 
-    sidebar.classList.add('active');
-    dashboardContainer.style.display = 'block';
+  // Estado inicial desde localStorage (visible por defecto)
+  const initialOpen = (localStorage.getItem('dashboardState') ?? 'visible') !== 'hidden';
+  apply(initialOpen);
 
-    const inventarioBadge = document.querySelector('#inventario-badge');
-    const pedidosBadge = document.querySelector('#pedidos-badge');
-    const alertasBadge = document.querySelector('#alertas-badge');
-
-    if (inventarioBadge && pedidosBadge && alertasBadge) {
-        const updateBadges = () => {
-            fetch('/alertas/total', {
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                inventarioBadge.textContent = data.lowStockCount > 0 ? data.lowStockCount : '';
-                inventarioBadge.style.display = data.lowStockCount > 0 ? 'inline-block' : 'none';
-                pedidosBadge.textContent = data.pendingOrders > 0 ? data.pendingOrders : '';
-                pedidosBadge.style.display = data.pendingOrders > 0 ? 'inline-block' : 'none';
-                alertasBadge.textContent = data.totalAlertas > 0 ? data.totalAlertas : '';
-                alertasBadge.style.display = data.totalAlertas > 0 ? 'inline-block' : 'none';
-            })
-            .catch(error => console.error('Error al actualizar badges:', error));
-        };
-
-        updateBadges();
-        setInterval(updateBadges, 10000);
-    }
+  // Toggle al click
+  toggler.addEventListener('click', (e) => {
+    e.preventDefault();
+    const isOpen = sidebar.classList.contains('active');
+    apply(!isOpen);
+  });
 });
