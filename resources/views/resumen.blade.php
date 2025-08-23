@@ -1,3 +1,5 @@
+@if(auth()->check() && auth()->user()->role === 'admin')
+
 @extends('layouts.app')
 
 @section('content')
@@ -34,3 +36,5 @@
         window.productosData = @json($productosData ?? []);
     </script>
 @endsection
+
+@endif

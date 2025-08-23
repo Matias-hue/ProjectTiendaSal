@@ -1,3 +1,5 @@
+@if(auth()->check() && auth()->user()->role === 'admin')
+
 <div>
     <h3>Pedido #{{ $pedido->id }}</h3>
     <h4>Datos del Cliente</h4>
@@ -29,3 +31,5 @@
     <p><strong>Total:</strong> ${{ number_format($pedido->total, 2) }}</p>
     <p><strong>Fecha:</strong> {{ $pedido->created_at->format('d/m/Y H:i') }}</p>
 </div>
+
+@endif

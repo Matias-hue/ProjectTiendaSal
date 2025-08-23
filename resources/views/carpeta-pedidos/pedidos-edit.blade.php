@@ -1,3 +1,5 @@
+@if(auth()->check() && auth()->user()->role === 'admin')
+
 @extends('layouts.app')
 
 @section('content')
@@ -69,3 +71,5 @@
     </main>
     @include('layouts.footer')
 @endsection
+
+@endif
