@@ -7,6 +7,7 @@
             @else 
                 @auth
                     <a class="text-gray-700 hover:text-blue-900" href="{{ route('profile.edit') }}">Mi Perfil</a>
+                    <a class="text-gray-700 hover:text-blue-900" href="{{ route('mis-pedidos') }}">Mis Pedidos</a>
                 @endauth
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
                     @csrf

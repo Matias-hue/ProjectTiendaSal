@@ -185,4 +185,13 @@ class OrderController extends Controller
             return response()->json(['error' => 'Error al generar el PDF: ' . $e->getMessage()], 500);
         }
     }
+
+    public function userOrders()
+    {
+        $pedidos = Order::with(['items.product'])
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->paginate(10);
+        return view('mis-pedidos', compact('pedidos'));
+    }
 }

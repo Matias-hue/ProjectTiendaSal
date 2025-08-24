@@ -762,6 +762,212 @@ dialog {
     color: #333;
 }
 
+/* Mis Pedidos*/
+.page-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mis-pedidos-container {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
+    max-width: 50rem;
+    width: 100%;
+}
+
+.mis-pedidos-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #1e3a8a;
+    text-align: center;
+}
+
+.mis-pedidos-dialog-message {
+    text-align: center;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.mis-pedidos-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 0.0625rem solid #d1d5db;
+}
+
+.mis-pedidos-table th,
+.mis-pedidos-table td {
+    border-right: 0.0625rem solid #d1d5db;
+    border-bottom: 0.0625rem solid #d1d5db;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.mis-pedidos-table-header {
+    background-color: #f3f4f6;
+}
+
+.mis-pedidos-table-cell {
+    font-size: 0.875rem;
+}
+
+.mis-pedidos-action-cell {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.mis-pedidos-btn-detalles {
+    display: inline-block;
+    background: #e0e7ff;
+    color: #1e3a8a;
+    border: 1px solid #1e3a8a;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    font-size: 0.875rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+.mis-pedidos-btn-detalles:hover {
+    background: #1e3a8a;
+    color: #fff;
+    transform: translateY(-0.125rem);
+}
+
+.mis-pedidos-btn-detalles:focus {
+    outline: 2px solid #1e3a8a;
+    outline-offset: 2px;
+}
+
+.mis-pedidos-btn-pdf {
+    display: inline-block;
+    background: #6b7280;
+    color: #fff;
+    border: 1px solid #6b7280;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    font-size: 0.875rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+.mis-pedidos-btn-pdf:hover {
+    background: #4b5563;
+    color: #fff;
+    transform: translateY(-0.125rem);
+}
+
+.mis-pedidos-btn-pdf:focus {
+    outline: 2px solid #4b5563;
+    outline-offset: 2px;
+}
+
+.mis-pedidos-btn-volver {
+    display: inline-block;
+    background-color: #969696;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+    font-size: 1rem;
+    text-decoration: none;
+    margin-top: 1.5rem;
+    width: 100%;
+    max-width: 12rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mis-pedidos-btn-volver:hover {
+    background-color: #787878;
+    transform: translateY(-0.125rem);
+}
+
+.mis-pedidos-btn-volver:focus {
+    outline: 2px solid #787878;
+    outline-offset: 2px;
+}
+
+.mis-pedidos-status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.mis-pedidos-status-badge.status-pendiente {
+    background-color: #fef3c7;
+    color: #d97706;
+    border: 1px solid #d97706;
+}
+
+.mis-pedidos-status-badge.status-enviado {
+    background-color: #dbeafe;
+    color: #3b82f6;
+    border: 1px solid #3b82f6;
+}
+
+.mis-pedidos-status-badge.status-completado {
+    background-color: #d1fae5;
+    color: #10b981;
+    border: 1px solid #10b981;
+}
+
+.mis-pedidos-status-badge.status-cancelado {
+    background-color: #fee2e2;
+    color: #ef4444;
+    border: 1px solid #ef4444;
+}
+
+.mis-pedidos-status-badge:hover {
+    opacity: 0.9;
+}
+
+.mis-pedidos-pagination {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.mis-pedidos-pagination a {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin: 0 0.25rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    color: #1e3a8a;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.mis-pedidos-pagination a:hover {
+    background-color: #e0e7ff;
+}
+
+.mis-pedidos-pagination .active {
+    background-color: #1e3a8a;
+    color: #fff;
+    border-color: #1e3a8a;
+}
+
 /* Us_users */
 .container-usuarios {
     background-color: white;

@@ -45,6 +45,9 @@ Route::patch('/pedidos/{id}/complete', [OrderController::class, 'complete'])->na
 Route::patch('/pedidos/{id}/cancel', [OrderController::class, 'cancel'])->name('pedidos.cancel');
 Route::get('/pedidos/{id}/pdf', [OrderController::class, 'pdf'])->name('pedidos.pdf');
 
+// Ruta para historial de pedidos de usuarios autenticados
+Route::get('/mis-pedidos', [OrderController::class, 'userOrders'])->name('mis-pedidos')->middleware('auth');
+
 // Rutas de usuarios (admin)
 Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
 Route::get('/usuarios/create', [UsuarioController::class, 'create'])->name('usuarios.create');

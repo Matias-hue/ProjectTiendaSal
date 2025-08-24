@@ -1,4 +1,4 @@
-@if(auth()->check() && auth()->user()->role === 'admin')
+@if(auth()->check())
 
 <div>
     <h3>Pedido #{{ $pedido->id }}</h3>
