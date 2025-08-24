@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const userSearch = document.getElementById('user_search');
     const userIdInput = document.getElementById('user_id');
     const userSuggestions = document.getElementById('user-suggestions');
+    const orderSearch = document.getElementById('order-search');
+    const orderSuggestions = document.getElementById('order-suggestions');
 
     let currentOrderId;
     let currentRow;
@@ -88,7 +90,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 300);
         });
 
-        // Ocultar sugerencias al hacer clic fuera
         document.addEventListener('click', function (e) {
             if (!userSearch.contains(e.target) && !userSuggestions.contains(e.target)) {
                 userSuggestions.innerHTML = '';
@@ -97,43 +98,278 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Botones de completar
-    const completeButtons = document.querySelectorAll('.btn-completar');
-    completeButtons.forEach(button => {
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
-            currentOrderId = this.getAttribute('data-id');
-            currentRow = this.closest('tr');
-            if (dialogCompletar) dialogCompletar.showModal();
+    // Búsqueda de pedidos
+    if (orderSearch && orderSuggestions) {
+        let timeout = null;
+        orderSearch.addEventListener('input', function () {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                const query = orderSearch.value.trim();
+                if (query.length < 2) {
+                    orderSuggestions.innerHTML = '';
+                    orderSuggestions.style.display = 'none';
+                    updateTable('/pedidos');
+                    return;
+                }
+                fetch(`/pedidos?search=${encodeURIComponent(query)}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                    },
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    orderSuggestions.innerHTML = '';
+                    if (data.data.length === 0) {
+                        orderSuggestions.innerHTML = '<div class="suggestion-item">No se encontraron pedidos</div>';
+                        orderSuggestions.style.display = 'block';
+                        updateTable(`/pedidos?search=${encodeURIComponent(query)}`);
+                        return;
+                    }
+                    data.data.forEach(pedido => {
+                        const div = document.createElement('div');
+                        div.className = 'suggestion-item';
+                        div.textContent = `Pedido #${pedido.id} - ${pedido.user.name} (${pedido.user.email})`;
+                        div.dataset.orderId = pedido.id;
+                        div.addEventListener('click', () => {
+                            orderSearch.value = `Pedido #${pedido.id} - ${pedido.user.name} (${pedido.user.email})`;
+                            orderSuggestions.innerHTML = '';
+                            orderSuggestions.style.display = 'none';
+                            updateTable(`/pedidos?search=${encodeURIComponent(pedido.user.name)}`);
+                        });
+                        orderSuggestions.appendChild(div);
+                    });
+                    orderSuggestions.style.display = 'block';
+                    updateTable(`/pedidos?search=${encodeURIComponent(query)}`);
+                })
+                .catch(error => {
+                    console.error('Error fetching orders:', error);
+                    orderSuggestions.innerHTML = '<div class="suggestion-item">Error al buscar pedidos</div>';
+                    orderSuggestions.style.display = 'block';
+                    mostrarError('Error al buscar pedidos: ' + error.message);
+                });
+            }, 300);
         });
-    });
 
-    // Botones de cancelar
-    const cancelButtons = document.querySelectorAll('.btn-cancelar');
-    cancelButtons.forEach(button => {
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
-            currentOrderId = this.getAttribute('data-id');
-            currentRow = this.closest('tr');
-            if (dialogCancelar) dialogCancelar.showModal();
-        });
-    });
-
-    // Botones de detalles
-    const detailsButtons = document.querySelectorAll('.btn-detalles, .mis-pedidos-btn-detalles');
-    detailsButtons.forEach(button => {
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
-            const pedidoId = this.getAttribute('data-id');
-            if (pedidoId) {
-                showDetails(pedidoId);
-            } else {
-                mostrarError('ID del pedido no encontrado.');
+        document.addEventListener('click', function (e) {
+            if (!orderSearch.contains(e.target) && !orderSuggestions.contains(e.target)) {
+                orderSuggestions.innerHTML = '';
+                orderSuggestions.style.display = 'none';
             }
         });
+    }
+
+    // Manejo de paginación con AJAX
+    function handlePagination(e) {
+        e.preventDefault();
+        const url = this.getAttribute('href');
+        updateTable(url);
+    }
+
+    function updateTable(url) {
+        console.log('Fetching URL:', url);
+        fetch(url, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => {
+                    throw new Error(`Error HTTP: ${response.status} - ${text}`);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            const tableBody = document.querySelector('#pedidos-table tbody');
+            const pagination = document.querySelector('.pagination');
+            tableBody.innerHTML = '';
+            if (data.data.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" class="table-cell">No hay pedidos disponibles.</td></tr>';
+                pagination.innerHTML = '';
+                return;
+            }
+            data.data.forEach(pedido => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="table-cell">${pedido.id}</td>
+                    <td class="table-cell">${pedido.user.name}</td>
+                    <td class="table-cell">$${parseFloat(pedido.total).toFixed(2)}</td>
+                    <td class="table-cell status-cell">${pedido.status.charAt(0).toUpperCase() + pedido.status.slice(1).toLowerCase()}</td>
+                    <td class="table-cell action-cell">
+                        ${pedido.status === 'Pendiente' ? `
+                            <button class="btn-completar" data-id="${pedido.id}" aria-label="Marcar pedido #${pedido.id} como completado">Marcar como Completado</button>
+                            <button class="btn-cancelar" data-id="${pedido.id}" aria-label="Cancelar pedido #${pedido.id}">Cancelar</button>
+                            <a href="/pedidos/${pedido.id}/edit" class="btn-editar" aria-label="Editar pedido #${pedido.id}">Editar</a>
+                        ` : ''}
+                        <button class="btn-detalles" data-id="${pedido.id}" aria-label="Ver detalles del pedido #${pedido.id}">Ver Detalles</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+            pagination.innerHTML = data.links;
+            bindPaginationLinks();
+            bindActionButtons();
+        })
+        .catch(error => {
+            console.error('Error fetching orders:', error);
+            mostrarError('Error al cargar los pedidos: ' + error.message);
+        });
+    }
+
+    function bindPaginationLinks() {
+        const paginationLinks = document.querySelectorAll('.pagination a');
+        paginationLinks.forEach(link => {
+            link.removeEventListener('click', handlePagination);
+            link.addEventListener('click', handlePagination);
+        });
+    }
+
+    function bindActionButtons() {
+        const completeButtons = document.querySelectorAll('.btn-completar');
+        const cancelButtons = document.querySelectorAll('.btn-cancelar');
+        const detailsButtons = document.querySelectorAll('.btn-detalles');
+
+        completeButtons.forEach(button => {
+            button.removeEventListener('click', handleComplete);
+            button.addEventListener('click', handleComplete);
+        });
+
+        cancelButtons.forEach(button => {
+            button.removeEventListener('click', handleCancel);
+            button.addEventListener('click', handleCancel);
+        });
+
+        detailsButtons.forEach(button => {
+            button.removeEventListener('click', handleDetails);
+            button.addEventListener('click', handleDetails);
+        });
+    }
+
+    function handleComplete(e) {
+        e.preventDefault();
+        currentOrderId = this.getAttribute('data-id');
+        currentRow = this.closest('tr');
+        if (dialogCompletar) dialogCompletar.showModal();
+    }
+
+    function handleCancel(e) {
+        e.preventDefault();
+        currentOrderId = this.getAttribute('data-id');
+        currentRow = this.closest('tr');
+        if (dialogCancelar) dialogCancelar.showModal();
+    }
+
+    function handleDetails(e) {
+        e.preventDefault();
+        const pedidoId = this.getAttribute('data-id');
+        if (pedidoId) {
+            showDetails(pedidoId);
+        } else {
+            mostrarError('ID del pedido no encontrado.');
+        }
+    }
+
+    if (btnConfirmarCompletar) {
+        btnConfirmarCompletar.addEventListener('click', function () {
+            btnConfirmarCompletar.disabled = true;
+            btnConfirmarCompletar.textContent = 'Procesando...';
+
+            fetch(`/pedidos/${currentOrderId}/complete`, {
+                method: 'PATCH',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(`Error HTTP: ${response.status} - ${text}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    const statusCell = currentRow?.querySelector('.status-cell');
+                    const actionCell = currentRow?.querySelector('.action-cell');
+                    if (statusCell) statusCell.textContent = 'Completado';
+                    if (actionCell) actionCell.innerHTML = `<button class="btn-detalles" data-id="${currentOrderId}" aria-label="Ver detalles del pedido #${currentOrderId}">Ver Detalles</button>`;
+                    if (dialogCompletar) dialogCompletar.close();
+                    mostrarExito(data.success);
+                    bindActionButtons();
+                } else {
+                    mostrarError(data.error || 'No se pudo completar el pedido.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mostrarError('Hubo un problema: ' + error.message);
+            })
+            .finally(() => {
+                btnConfirmarCompletar.disabled = false;
+                btnConfirmarCompletar.textContent = 'Sí';
+            });
+        });
+    }
+
+    if (btnConfirmarCancelar) {
+        btnConfirmarCancelar.addEventListener('click', function () {
+            btnConfirmarCancelar.disabled = true;
+            btnConfirmarCancelar.textContent = 'Procesando...';
+
+            fetch(`/pedidos/${currentOrderId}/cancel`, {
+                method: 'PATCH',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(`Error HTTP: ${response.status} - ${text}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    const statusCell = currentRow?.querySelector('.status-cell');
+                    const actionCell = currentRow?.querySelector('.action-cell');
+                    if (statusCell) statusCell.textContent = 'Cancelado';
+                    if (actionCell) actionCell.innerHTML = `<button class="btn-detalles" data-id="${currentOrderId}" aria-label="Ver detalles del pedido #${currentOrderId}">Ver Detalles</button>`;
+                    if (dialogCancelar) dialogCancelar.close();
+                    mostrarExito(data.success);
+                    bindActionButtons();
+                } else {
+                    mostrarError(data.error || 'No se pudo cancelar el pedido.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mostrarError('Hubo un problema al cancelar el pedido: ' + error.message);
+            })
+            .finally(() => {
+                btnConfirmarCancelar.disabled = false;
+                btnConfirmarCancelar.textContent = 'Sí';
+            });
+        });
+    }
+
+    const detailsButtons = document.querySelectorAll('.btn-detalles, .mis-pedidos-btn-detalles');
+    detailsButtons.forEach(button => {
+        button.addEventListener('click', handleDetails);
     });
 
-    // Botón de crear pedido
     const createButton = document.querySelector('.btn-crear-pedido');
     if (createButton) {
         createButton.addEventListener('click', function (e) {
@@ -142,13 +378,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Manejo de formularios de crear/editar pedidos
     const orderForms = document.querySelectorAll('#create-order-form, #edit-order-form');
     orderForms.forEach(form => {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            // botón de submit
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn) {
                 submitBtn.disabled = true;
@@ -218,7 +452,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     setTimeout(() => window.location.href = '/pedidos', 1000);
                 } else {
                     mostrarError(data.error || 'No se pudo procesar el pedido.');
-                    // Si falla, reactivar botón
                     if (submitBtn) {
                         submitBtn.disabled = false;
                         submitBtn.textContent = form.id === 'create-order-form'
@@ -230,7 +463,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => {
                 console.error('Error:', error);
                 mostrarError('Hubo un problema: ' + error.message);
-                // Si hay error, reactivar botón
                 if (submitBtn) {
                     submitBtn.disabled = false;
                     submitBtn.textContent = form.id === 'create-order-form'
@@ -241,7 +473,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Agregar ítems en救助
     const addItemButton = document.getElementById('add-item');
     if (addItemButton) {
         addItemButton.addEventListener('click', function () {
@@ -267,108 +498,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Eliminar ítems
     document.addEventListener('click', function (e) {
         if (e.target.classList.contains('btn-remove-item') && document.querySelectorAll('#items-table tbody tr').length > 1) {
             e.target.closest('tr').remove();
         }
     });
 
-    // Confirmar completar
-    if (btnConfirmarCompletar) {
-        btnConfirmarCompletar.addEventListener('click', function () {
-            btnConfirmarCompletar.disabled = true;
-            btnConfirmarCompletar.textContent = 'Procesando...';
-
-            fetch(`/pedidos/${currentOrderId}/complete`, {
-                method: 'PATCH',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.text().then(text => {
-                        throw new Error(`Error HTTP: ${response.status} - ${text}`);
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    const statusCell = currentRow?.querySelector('.status-cell');
-                    const actionCell = currentRow?.querySelector('td:last-child');
-                    if (statusCell) statusCell.textContent = 'Completado';
-                    if (actionCell) actionCell.innerHTML = `<button class="btn-detalles" data-id="${currentOrderId}" aria-label="Ver detalles del pedido #${currentOrderId}">Ver Detalles</button>`;
-                    if (dialogCompletar) dialogCompletar.close();
-                    mostrarExito(data.success);
-                } else {
-                    mostrarError(data.error || 'No se pudo completar el pedido.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                mostrarError('Hubo un problema: ' + error.message);
-            })
-            .finally(() => {
-                if (btnConfirmarCompletar) {
-                    btnConfirmarCompletar.disabled = false;
-                    btnConfirmarCompletar.textContent = 'Sí';
-                }
-            });
-        });
-    }
-
-    // Confirmar cancelar
-    if (btnConfirmarCancelar) {
-        btnConfirmarCancelar.addEventListener('click', function () {
-            btnConfirmarCancelar.disabled = true;
-            btnConfirmarCancelar.textContent = 'Procesando...';
-
-            fetch(`/pedidos/${currentOrderId}/cancel`, {
-                method: 'PATCH',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.text().then(text => {
-                        throw new Error(`Error HTTP: ${response.status} - ${text}`);
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    const statusCell = currentRow?.querySelector('.status-cell');
-                    const actionCell = currentRow?.querySelector('td:last-child');
-                    if (statusCell) statusCell.textContent = 'Cancelado';
-                    if (actionCell) actionCell.innerHTML = `<button class="btn-detalles" data-id="${currentOrderId}" aria-label="Ver detalles del pedido #${currentOrderId}">Ver Detalles</button>`;
-                    if (dialogCancelar) dialogCancelar.close();
-                    mostrarExito(data.success);
-                } else {
-                    mostrarError(data.error || 'No se pudo cancelar el pedido.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                mostrarError('Hubo un problema al cancelar el pedido: ' + error.message);
-            })
-            .finally(() => {
-                if (btnConfirmarCancelar) {
-                    btnConfirmarCancelar.disabled = false;
-                    btnConfirmarCancelar.textContent = 'Sí';
-                }
-            });
-        });
-    }
-
-    // Cerrar modales
     if (btnCerrarCompletar && dialogCompletar) {
         btnCerrarCompletar.addEventListener('click', () => dialogCompletar.close());
     }
@@ -381,6 +516,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (btnCerrarSuccess && dialogSuccess) {
         btnCerrarSuccess.addEventListener('click', () => dialogSuccess.close());
     }
+
+    bindPaginationLinks();
 });
 
 function showDetails(pedidoId) {

@@ -11,14 +11,38 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderStatusUpdated;
+use Illuminate\Support\Facades\Schema;
 
 class OrderController extends Controller
 {
     use LogActivity;
 
-    public function index()
+    public function index(Request $request)
     {
-        $pedidos = Order::with(['user', 'items.product'])->latest()->paginate(10);
+        $query = $request->input('search');
+        $hasDireccion = Schema::hasColumn('users', 'address');
+
+        $pedidos = Order::with(['user', 'items.product'])
+            ->when($query, function ($queryBuilder, $search) use ($hasDireccion) {
+                return $queryBuilder->whereHas('user', function ($q) use ($search, $hasDireccion) {
+                    $q->where('name', 'like', "%{$search}%")
+                      ->orWhere('email', 'like', "%{$search}%");
+                    if ($hasDireccion) {
+                        $q->orWhere('address', 'like', "%{$search}%");
+                    }
+                });
+            })
+            ->latest()
+            ->paginate(10)
+            ->appends(['search' => $query]);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'data' => $pedidos->items(),
+                'links' => $pedidos->links()->toHtml(),
+            ]);
+        }
+
         return view('pedidos', compact('pedidos'));
     }
 
@@ -71,7 +95,6 @@ class OrderController extends Controller
             $order->update(['total' => $total]);
             $this->logActivity('crear_pedido', "Creó el pedido #{$order->id}");
 
-            // Enviar correo al usuario
             if ($order->user) {
                 Mail::to($order->user->email)->send(new OrderStatusUpdated($order));
             }
@@ -128,11 +151,9 @@ class OrderController extends Controller
                 $total += $itemData['quantity'] * $producto->precio;
             }
 
-            $oldStatus = $order->status;
             $order->update(['total' => $total]);
             $this->logActivity('editar_pedido', "Editó el pedido #{$id}");
 
-            // Enviar correo al usuario
             if ($order->user) {
                 Mail::to($order->user->email)->send(new OrderStatusUpdated($order));
             }
@@ -155,7 +176,6 @@ class OrderController extends Controller
             $order->update(['status' => 'Completado']);
             $this->logActivity('completar_pedido', "Completó el pedido #{$id}");
 
-            // Enviar correo al usuario
             if ($order->user) {
                 Mail::to($order->user->email)->send(new OrderStatusUpdated($order));
             }
@@ -187,7 +207,6 @@ class OrderController extends Controller
             $order->update(['status' => 'Cancelado']);
             $this->logActivity('cancelar_pedido', "Canceló el pedido #{$id}");
 
-            // Enviar correo al usuario
             if ($order->user) {
                 Mail::to($order->user->email)->send(new OrderStatusUpdated($order));
             }

@@ -10,11 +10,15 @@
         <div class="button-container">
             <a href="{{ route('pedidos.create') }}" class="btn-crear-pedido" aria-label="Crear un nuevo pedido">Crear Pedido</a>
         </div>
+        <div class="search-container">
+            <input type="text" id="order-search" class="search-input" placeholder="Buscar por nombre, email o dirección..." aria-label="Buscar pedidos">
+            <div id="order-suggestions" class="user-suggestions"></div>
+        </div>
         <div class="pedidos-container">
             @if ($pedidos->isEmpty())
                 <p class="no-data">No hay pedidos disponibles.</p>
             @else
-                <table class="pedidos-table">
+                <table class="pedidos-table" id="pedidos-table">
                     <thead>
                         <tr class="table-header">
                             <th class="table-cell">ID</th>
