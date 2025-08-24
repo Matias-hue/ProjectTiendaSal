@@ -17,25 +17,29 @@
         </div>
     </div>
 
-    <div class="nav flex justify-between items-center py-2 px-8">
+    <div class="nav">
         <div class="flex items-center">
             <img alt="Logo de Sal La Isabela" class="logo" src="{{ asset('img/LogoLaIsabela.jpg') }}"/>
             <span class="ml-4 text-2xl font-bold">Sal La Isabela</span>
         </div>
 
-        <nav class="hidden md:flex space-x-8 text-lg">
-            <a class="text-gray-700 hover:text-blue-900" href="{{ route('index') }}">INICIO</a>
-            <a class="text-gray-700 hover:text-blue-900" href="{{ route('productos') }}">PRODUCTOS</a>
-            <a class="text-gray-700 hover:text-blue-900" href="{{ route('ubicacion') }}">UBICACIÓN</a>
-        </nav>
+        <div class="nav-tabs-container">
+            <nav class="nav-tabs hidden md:flex space-x-8 text-lg">
+                <a class="text-gray-700 hover:text-blue-900" href="{{ route('index') }}">INICIO</a>
+                <a class="text-gray-700 hover:text-blue-900" href="{{ route('productos') }}">PRODUCTOS</a>
+                <a class="text-gray-700 hover:text-blue-900" href="{{ route('ubicacion') }}">UBICACIÓN</a>
+            </nav>
+        </div>
 
-        <div class="flex items-center space-x-4">
+        <div class="cart-container">
             @if(auth()->check())
                 <a href="{{ route('cart') }}" class="cart relative">
                     <i class="fas fa-shopping-cart text-gray-700 text-2xl"></i>
-                    <span class="badge">{{ count(session('carrito', [])) }}</span>
+                    @if(count(session('carrito', [])) >= 1)
+                        <span class="badge">{{ count(session('carrito', [])) }}</span>
+                    @endif
                 </a>
             @endif
-        </div>        
+        </div>          
     </div>
 </header>
