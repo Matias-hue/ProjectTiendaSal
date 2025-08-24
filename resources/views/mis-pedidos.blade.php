@@ -30,7 +30,7 @@
                                     </span>
                                 </td>
                                 <td class="mis-pedidos-action-cell">
-                                    <a href="{{ route('pedidos.show', $pedido->id) }}" class="mis-pedidos-btn-detalles">Ver Detalles</a>
+                                    <button class="mis-pedidos-btn-detalles" data-id="{{ $pedido->id }}" aria-label="Ver detalles del pedido #{{ $pedido->id }}">Ver Detalles</button>
                                     <a href="{{ route('pedidos.pdf', $pedido->id) }}" class="mis-pedidos-btn-pdf">Descargar PDF</a>
                                 </td>
                             </tr>
@@ -43,6 +43,15 @@
             @endif
             <a href="{{ route('index') }}" class="mis-pedidos-btn-volver">Volver al Inicio</a>
         </div>
+
+        <dialog id="mis-pedidos-details-modal" aria-labelledby="mis-pedidos-details-title">
+            <h2 id="mis-pedidos-details-title" class="header-modal">Detalles del Pedido</h2>
+            <div id="mis-pedidos-details-content" class="dialog-message"></div>
+            <div class="modal-botones-div">
+                <button class="modal-botones" onclick="document.getElementById('mis-pedidos-details-modal').close()">Cerrar</button>
+                <a href="#" id="mis-pedidos-pdf-link" class="modal-botones">Descargar PDF</a>
+            </div>
+        </dialog>
     </div>
     @include('layouts.footer')
 @endsection

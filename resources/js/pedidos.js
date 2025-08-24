@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const dialogError = document.getElementById('dialog-error');
     const dialogSuccess = document.getElementById('dialog-success');
     const dialogDetails = document.getElementById('detailsModal');
+    const misPedidosDialogDetails = document.getElementById('mis-pedidos-details-modal');
     const btnCerrarCompletar = document.getElementById('btn-cerrar-completar');
     const btnCerrarCancelar = document.getElementById('btn-cerrar-cancelar');
     const btnCerrarError = document.getElementById('btn-cerrar-error');
@@ -119,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Botones de detalles
-    const detailsButtons = document.querySelectorAll('.btn-detalles');
+    const detailsButtons = document.querySelectorAll('.btn-detalles, .mis-pedidos-btn-detalles');
     detailsButtons.forEach(button => {
         button.addEventListener('click', function (e) {
             e.preventDefault();
@@ -240,8 +241,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-
-    // Agregar ítems en formularios
+    // Agregar ítems en救助
     const addItemButton = document.getElementById('add-item');
     if (addItemButton) {
         addItemButton.addEventListener('click', function () {
@@ -397,9 +397,11 @@ function showDetails(pedidoId) {
         return response.text();
     })
     .then(html => {
-        document.getElementById('detailsContent').innerHTML = html;
-        document.getElementById('pdfLink').href = `/pedidos/${pedidoId}/pdf`;
-        const dialogDetails = document.getElementById('detailsModal');
+        const dialogDetails = document.getElementById('mis-pedidos-details-modal') || document.getElementById('detailsModal');
+        const detailsContent = dialogDetails.querySelector('#mis-pedidos-details-content') || document.getElementById('detailsContent');
+        const pdfLink = dialogDetails.querySelector('#mis-pedidos-pdf-link') || document.getElementById('pdfLink');
+        detailsContent.innerHTML = html;
+        pdfLink.href = `/pedidos/${pedidoId}/pdf`;
         if (dialogDetails) dialogDetails.showModal();
     })
     .catch(error => {
