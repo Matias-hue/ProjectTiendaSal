@@ -4,7 +4,7 @@
     "name": "index"
   },
   "resources/js/app.js": {
-    "file": "assets/app-xeoYvwZw.js",
+    "file": "assets/app-DK9Welzp.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -28,9 +28,15 @@
     "isEntry": true
   },
   "resources/js/pedidos.js": {
-    "file": "assets/pedidos-0g08ajZU.js",
+    "file": "assets/pedidos-DZOaz84t.js",
     "name": "pedidos",
     "src": "resources/js/pedidos.js",
+    "isEntry": true
+  },
+  "resources/js/register.js": {
+    "file": "assets/register-0o93vqD5.js",
+    "name": "register",
+    "src": "resources/js/register.js",
     "isEntry": true
   },
   "resources/js/registro.js": {
@@ -52,13 +58,13 @@
     "isEntry": true
   },
   "resources/js/usuarios.js": {
-    "file": "assets/usuarios-BezY1ui1.js",
+    "file": "assets/usuarios-e-l6489B.js",
     "name": "usuarios",
     "src": "resources/js/usuarios.js",
     "isEntry": true
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-DOy3eN4E.css",
+    "file": "assets/app-CZE6BDA1.css",
     "src": "resources/sass/app.scss",
     "isEntry": true
   }

@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",()=>{const t=document.getElementById("registerForm"),e=document.getElementById("phone");t.addEventListener("submit",n=>{/^(\+\d{1,3}[- ]?)?\d{7,12}$/.test(e.value)||(n.preventDefault(),alert("Ingrese un teléfono válido (ej. +541234567890 o 1234567890)."),e.focus())})});
