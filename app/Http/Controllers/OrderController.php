@@ -9,6 +9,8 @@ use App\Traits\LogActivity;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderStatusUpdated;
 
 class OrderController extends Controller
 {
@@ -69,6 +71,11 @@ class OrderController extends Controller
             $order->update(['total' => $total]);
             $this->logActivity('crear_pedido', "Creó el pedido #{$order->id}");
 
+            // Enviar correo al usuario
+            if ($order->user) {
+                Mail::to($order->user->email)->send(new OrderStatusUpdated($order));
+            }
+
             DB::commit();
             return response()->json(['success' => 'Pedido creado correctamente.']);
         } catch (\Exception $e) {
@@ -121,8 +128,14 @@ class OrderController extends Controller
                 $total += $itemData['quantity'] * $producto->precio;
             }
 
+            $oldStatus = $order->status;
             $order->update(['total' => $total]);
             $this->logActivity('editar_pedido', "Editó el pedido #{$id}");
+
+            // Enviar correo al usuario
+            if ($order->user) {
+                Mail::to($order->user->email)->send(new OrderStatusUpdated($order));
+            }
 
             DB::commit();
             return response()->json(['success' => 'Pedido actualizado correctamente.']);
@@ -141,6 +154,11 @@ class OrderController extends Controller
             }
             $order->update(['status' => 'Completado']);
             $this->logActivity('completar_pedido', "Completó el pedido #{$id}");
+
+            // Enviar correo al usuario
+            if ($order->user) {
+                Mail::to($order->user->email)->send(new OrderStatusUpdated($order));
+            }
 
             return response()->json(['success' => 'Pedido marcado como completado.', 'status' => 'Completado']);
         } catch (\Exception $e) {
@@ -168,6 +186,11 @@ class OrderController extends Controller
 
             $order->update(['status' => 'Cancelado']);
             $this->logActivity('cancelar_pedido', "Canceló el pedido #{$id}");
+
+            // Enviar correo al usuario
+            if ($order->user) {
+                Mail::to($order->user->email)->send(new OrderStatusUpdated($order));
+            }
 
             return response()->json(['success' => 'Pedido cancelado correctamente.', 'status' => 'Cancelado']);
         } catch (\Exception $e) {
