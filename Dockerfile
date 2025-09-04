@@ -1,5 +1,5 @@
 # Imagen base PHP-FPM
-FROM php:8.2-fpm-bullseye
+FROM php:8.3-fpm-bullseye
 
 WORKDIR /var/www/html
 
@@ -35,7 +35,9 @@ RUN docker-php-ext-configure zip --with-zip && docker-php-ext-install zip
 RUN docker-php-ext-install mbstring
 RUN docker-php-ext-install bcmath
 RUN docker-php-ext-install xml
-RUN docker-php-ext-configure tokenizer && docker-php-ext-install tokenizer
+# Depuración: listar archivos fuente de tokenizer
+RUN ls -la /usr/src/php/ext/tokenizer/Zend/
+RUN docker-php-ext-install tokenizer
 RUN docker-php-ext-install ctype
 RUN docker-php-ext-install curl
 RUN docker-php-ext-install openssl
