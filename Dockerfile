@@ -13,16 +13,12 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     zlib1g-dev \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype-dev \
     pkg-config \
     build-essential \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Instalar extensiones de PHP necesarias
-RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
-    && docker-php-ext-install pdo_mysql zip mbstring bcmath xml tokenizer ctype gd
+# Instalar extensiones de PHP necesarias (sin GD)
+RUN docker-php-ext-install pdo_mysql zip mbstring bcmath xml tokenizer ctype
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -36,11 +32,11 @@ RUN composer install --no-dev --optimize-autoloader
 # Compilar assets de Vite
 RUN npm install && npm run build
 
-# Dar permisos correctos
+# Dar permisos
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Exponer puerto de Laravel
+# Exponer puerto
 EXPOSE 8000
 
 # Ejecutar Laravel en primer plano
