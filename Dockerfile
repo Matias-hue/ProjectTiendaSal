@@ -14,14 +14,14 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zlib1g-dev \
     libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libfreetype-dev \
     pkg-config \
     build-essential \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalar extensiones de PHP necesarias
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
     && docker-php-ext-install pdo_mysql zip mbstring bcmath xml tokenizer ctype gd
 
 # Instalar Composer
@@ -36,7 +36,7 @@ RUN composer install --no-dev --optimize-autoloader
 # Compilar assets de Vite
 RUN npm install && npm run build
 
-# Dar permisos
+# Dar permisos correctos
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
