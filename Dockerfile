@@ -1,5 +1,5 @@
 # Imagen base PHP-FPM
-FROM php:8.2.12-fpm
+FROM php:8.2.26-fpm
 
 WORKDIR /var/www/html
 
@@ -24,6 +24,8 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libcurl4-openssl-dev \
     libssl-dev \
+    bison \
+    re2c \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalar extensiones de PHP necesarias
