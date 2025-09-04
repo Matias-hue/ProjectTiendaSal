@@ -22,13 +22,25 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalar extensiones de PHP necesarias (una por una para depurar)
-RUN docker-php-ext-install pdo_mysql
-RUN docker-php-ext-configure zip --with-zip && docker-php-ext-install zip
-RUN docker-php-ext-install mbstring
-RUN docker-php-ext-install bcmath
-RUN docker-php-ext-install xml
-RUN docker-php-ext-install tokenizer
-RUN docker-php-ext-install ctype
+# Instalar dependencias del sistema
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    curl \
+    npm \
+    libzip-dev \
+    libonig-dev \
+    libxml2-dev \
+    zlib1g-dev \
+    pkg-config \
+    build-essential \
+    autoconf \
+    libc-dev \
+    default-libmysqlclient-dev \
+    libmariadb-dev \
+    libmariadb-dev-compat \
+    libpq-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
