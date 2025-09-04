@@ -1,14 +1,33 @@
-# Imagen base PHP-FPM
+# ===========================
+# Stage 1: Build frontend assets con Node 20
+# ===========================
+FROM node:20 AS build
+
+WORKDIR /app
+
+# Copiar solo package.json y package-lock.json (si existe) para cachear dependencias
+COPY package*.json vite.config.* ./
+
+RUN npm install
+
+# Copiar el resto del proyecto
+COPY . .
+
+# Compilar assets con Vite
+RUN npm run build
+
+# ===========================
+# Stage 2: Backend con PHP 8.3
+# ===========================
 FROM php:8.3-fpm-bullseye
 
 WORKDIR /var/www/html
 
-# Instalar dependencias del sistema
+# Instalar dependencias del sistema necesarias para extensiones PHP
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
     curl \
-    npm \
     libzip-dev \
     libonig-dev \
     libxml2-dev \
@@ -30,32 +49,23 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalar extensiones de PHP necesarias
-RUN docker-php-ext-install pdo_mysql
-RUN docker-php-ext-configure zip --with-zip && docker-php-ext-install zip
-RUN docker-php-ext-install mbstring
-RUN docker-php-ext-install bcmath
-RUN docker-php-ext-install xml
-# tokenizer ya está incluido, no hace falta instalarlo
-RUN docker-php-ext-install ctype
-RUN docker-php-ext-install curl
-RUN docker-php-ext-install intl
+RUN docker-php-ext-install pdo_mysql \
+    && docker-php-ext-configure zip --with-zip \
+    && docker-php-ext-install zip mbstring bcmath xml ctype curl intl
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copiar proyecto
+# Copiar proyecto Laravel (sin node_modules)
 COPY . .
 
-# Verificar archivos copiados (para depuración)
-RUN ls -la
+# Copiar assets ya compilados desde el stage de Node
+COPY --from=build /app/public/build ./public/build
 
-# Instalar dependencias de Laravel
+# Instalar dependencias de Laravel en modo producción
 RUN php -d memory_limit=-1 /usr/bin/composer install --no-dev --optimize-autoloader --no-interaction
 
-# Compilar assets de Vite
-RUN npm install && npm run build
-
-# Dar permisos
+# Ajustar permisos para Laravel
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
