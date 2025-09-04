@@ -15,10 +15,13 @@ RUN apt-get update && apt-get install -y \
     zlib1g-dev \
     pkg-config \
     build-essential \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    default-libmysqlclient-dev
 
 # Instalar extensiones de PHP necesarias (sin GD)
 RUN docker-php-ext-install pdo_mysql zip mbstring bcmath xml tokenizer ctype
+
+# Limpiar después de instalar todo
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
