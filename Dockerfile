@@ -1,5 +1,5 @@
 # Imagen base PHP-FPM
-FROM php:8.2.20-fpm
+FROM php:8.2.12-fpm
 
 WORKDIR /var/www/html
 
@@ -22,19 +22,22 @@ RUN apt-get update && apt-get install -y \
     libmariadb-dev-compat \
     libpq-dev \
     libicu-dev \
+    libcurl4-openssl-dev \
+    libssl-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalar extensiones de PHP necesarias
-RUN docker-php-ext-install pdo_mysql \
-    && docker-php-ext-configure zip --with-zip \
-    && docker-php-ext-install zip \
-    && docker-php-ext-install mbstring \
-    && docker-php-ext-install bcmath \
-    && docker-php-ext-install xml \
-    && docker-php-ext-install tokenizer ctype \
-    && docker-php-ext-install curl \
-    && docker-php-ext-install openssl \
-    && docker-php-ext-install intl
+RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-configure zip --with-zip && docker-php-ext-install zip
+RUN docker-php-ext-install mbstring
+RUN docker-php-ext-install bcmath
+RUN docker-php-ext-install xml
+RUN docker-php-ext-install tokenizer
+RUN docker-ph
+p-ext-install ctype
+RUN docker-php-ext-install curl
+RUN docker-php-ext-install openssl
+RUN docker-php-ext-install intl
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
