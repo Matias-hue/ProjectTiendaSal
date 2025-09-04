@@ -33,8 +33,7 @@ RUN docker-php-ext-install mbstring
 RUN docker-php-ext-install bcmath
 RUN docker-php-ext-install xml
 RUN docker-php-ext-install tokenizer
-RUN docker-ph
-p-ext-install ctype
+RUN docker-php-ext-install ctype
 RUN docker-php-ext-install curl
 RUN docker-php-ext-install openssl
 RUN docker-php-ext-install intl
