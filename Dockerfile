@@ -16,20 +16,14 @@ RUN apt-get update && apt-get install -y \
     pkg-config \
     build-essential \
     default-libmysqlclient-dev \
-    libmariadb-dev
+    libmariadb-dev \
+    libmariadb-dev-compat \
+    libpq-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalar extensiones de PHP necesarias (sin GD)
-RUN docker-php-ext-install pdo_mysql \
-    && docker-php-ext-configure zip --with-zip \
-    && docker-php-ext-install zip \
-    && docker-php-ext-install mbstring \
-    && docker-php-ext-install bcmath \
-    && docker-php-ext-install xml \
-    && docker-php-ext-install tokenizer \
-    && docker-php-ext-install ctype
-
-# Limpiar después de instalar todo
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN docker-php-ext-configure zip --with-zip \
+    && docker-php-ext-install pdo_mysql zip mbstring bcmath xml tokenizer ctype
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
