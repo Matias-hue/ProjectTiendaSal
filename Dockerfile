@@ -5,20 +5,27 @@ WORKDIR /var/www/html
 
 # Instalar dependencias de sistema y PHP necesarias
 RUN apt-get update && apt-get install -y \
-    libzip-dev \
-    unzip \
     git \
+    unzip \
     curl \
     npm \
+    libzip-dev \
     libonig-dev \
     libxml2-dev \
-    && docker-php-ext-install pdo_mysql zip mbstring bcmath xml tokenizer ctype \
+    zlib1g-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    pkg-config \
+    build-essential \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_mysql zip mbstring bcmath xml tokenizer ctype gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copiar proyecto al contenedor
+# Copiar proyecto
 COPY . .
 
 # Instalar dependencias de Laravel
@@ -30,7 +37,7 @@ RUN npm install && npm run build
 # Dar permisos correctos
 RUN chmod -R 775 storage bootstrap/cache
 
-# Exponer puerto de Laravel
+# Exponer puerto
 EXPOSE 8000
 
 # Arrancar Laravel en primer plano
