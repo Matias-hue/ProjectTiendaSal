@@ -1,27 +1,8 @@
 # Imagen base PHP-FPM
-FROM php:8.2.12-fpm
+FROM php:8.2.20-fpm
 
 WORKDIR /var/www/html
 
-# Instalar dependencias del sistema
-RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    curl \
-    npm \
-    libzip-dev \
-    libonig-dev \
-    libxml2-dev \
-    zlib1g-dev \
-    pkg-config \
-    build-essential \
-    default-libmysqlclient-dev \
-    libmariadb-dev \
-    libmariadb-dev-compat \
-    libpq-dev \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Instalar extensiones de PHP necesarias (una por una para depurar)
 # Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
     git \
@@ -40,7 +21,20 @@ RUN apt-get update && apt-get install -y \
     libmariadb-dev \
     libmariadb-dev-compat \
     libpq-dev \
+    libicu-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Instalar extensiones de PHP necesarias
+RUN docker-php-ext-install pdo_mysql \
+    && docker-php-ext-configure zip --with-zip \
+    && docker-php-ext-install zip \
+    && docker-php-ext-install mbstring \
+    && docker-php-ext-install bcmath \
+    && docker-php-ext-install xml \
+    && docker-php-ext-install tokenizer ctype \
+    && docker-php-ext-install curl \
+    && docker-php-ext-install openssl \
+    && docker-php-ext-install intl
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -48,8 +42,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copiar proyecto
 COPY . .
 
+# Verificar archivos copiados (para depuración)
+RUN ls -la
+
 # Instalar dependencias de Laravel
-RUN composer install --no-dev --optimize-autoloader
+RUN php -d memory_limit=-1 /usr/bin/composer install --no-dev --optimize-autoloader --no-interaction
 
 # Compilar assets de Vite
 RUN npm install && npm run build
