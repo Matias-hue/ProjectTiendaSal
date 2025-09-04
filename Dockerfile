@@ -1,35 +1,30 @@
-# 1. Imagen base con PHP 8.2 y FPM
-FROM php:8.2-fpm
+# Imagen base PHP CLI
+FROM php:8.2-cli
 
-# 2. Establecer directorio de trabajo
 WORKDIR /var/www/html
 
-# 3. Instalar extensiones de PHP necesarias y herramientas
+# Instalar dependencias
 RUN apt-get update && apt-get install -y \
-    libzip-dev \
-    unzip \
-    git \
-    curl \
-    npm \
+    libzip-dev unzip git curl npm \
     && docker-php-ext-install pdo_mysql zip
 
-# 4. Instalar Composer
+# Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 5. Copiar todos los archivos del proyecto al contenedor
+# Copiar proyecto
 COPY . .
 
-# 6. Instalar dependencias de Laravel
+# Instalar dependencias de Laravel
 RUN composer install --no-dev --optimize-autoloader
 
-# 7. Compilar assets de Vite
+# Compilar assets de Vite
 RUN npm install && npm run build
 
-# 8. Dar permisos necesarios
+# Permisos
 RUN chmod -R 775 storage bootstrap/cache
 
-# 9. Exponer puerto que Render usará
+# Exponer puerto
 EXPOSE 8000
 
-# 10. Comando para arrancar Laravel dentro del contenedor
+# Arrancar Laravel
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
