@@ -35,12 +35,9 @@ RUN docker-php-ext-configure zip --with-zip && docker-php-ext-install zip
 RUN docker-php-ext-install mbstring
 RUN docker-php-ext-install bcmath
 RUN docker-php-ext-install xml
-# Depuración: listar archivos fuente de tokenizer
-RUN ls -la /usr/src/php/ext/tokenizer/Zend/
-RUN docker-php-ext-install tokenizer
+# tokenizer ya está incluido, no hace falta instalarlo
 RUN docker-php-ext-install ctype
 RUN docker-php-ext-install curl
-RUN docker-php-ext-install openssl
 RUN docker-php-ext-install intl
 
 # Instalar Composer
