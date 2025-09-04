@@ -1,9 +1,9 @@
-# Imagen base PHP CLI
-FROM php:8.2-cli
+# Imagen base PHP-FPM
+FROM php:8.2-fpm
 
 WORKDIR /var/www/html
 
-# Instalar dependencias de sistema y PHP necesarias
+# Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -18,9 +18,11 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     pkg-config \
     build-essential \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_mysql zip mbstring bcmath xml tokenizer ctype gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Instalar extensiones de PHP necesarias
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_mysql zip mbstring bcmath xml tokenizer ctype gd
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -34,11 +36,12 @@ RUN composer install --no-dev --optimize-autoloader
 # Compilar assets de Vite
 RUN npm install && npm run build
 
-# Dar permisos correctos
-RUN chmod -R 775 storage bootstrap/cache
+# Dar permisos
+RUN chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
 
-# Exponer puerto
+# Exponer puerto de Laravel
 EXPOSE 8000
 
-# Arrancar Laravel en primer plano
+# Ejecutar Laravel en primer plano
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
