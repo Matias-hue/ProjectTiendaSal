@@ -1,5 +1,5 @@
 # Imagen base PHP-FPM
-FROM php:8.2.26-fpm
+FROM php:8.2-fpm-bullseye
 
 WORKDIR /var/www/html
 
@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     bison \
     re2c \
+    flex \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalar extensiones de PHP necesarias
@@ -34,7 +35,7 @@ RUN docker-php-ext-configure zip --with-zip && docker-php-ext-install zip
 RUN docker-php-ext-install mbstring
 RUN docker-php-ext-install bcmath
 RUN docker-php-ext-install xml
-RUN docker-php-ext-install tokenizer
+RUN docker-php-ext-configure tokenizer && docker-php-ext-install tokenizer
 RUN docker-php-ext-install ctype
 RUN docker-php-ext-install curl
 RUN docker-php-ext-install openssl
