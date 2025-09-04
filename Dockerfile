@@ -21,9 +21,14 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Instalar extensiones de PHP necesarias (sin GD)
-RUN docker-php-ext-configure zip --with-zip \
-    && docker-php-ext-install pdo_mysql zip mbstring bcmath xml tokenizer ctype
+# Instalar extensiones de PHP necesarias (una por una para depurar)
+RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-configure zip --with-zip && docker-php-ext-install zip
+RUN docker-php-ext-install mbstring
+RUN docker-php-ext-install bcmath
+RUN docker-php-ext-install xml
+RUN docker-php-ext-install tokenizer
+RUN docker-php-ext-install ctype
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
