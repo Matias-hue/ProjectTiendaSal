@@ -49,7 +49,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalar extensiones de PHP necesarias
-RUN docker-php-ext-install pdo_mysql \
+RUN docker-php-ext-install pdo_mysql pdo_pgsql pgsql \
     && docker-php-ext-configure zip --with-zip \
     && docker-php-ext-install zip mbstring bcmath xml ctype curl intl
 
