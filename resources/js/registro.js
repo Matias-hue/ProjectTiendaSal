@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const pagination = document.querySelector('.pagination');
 
     function updateTable(url = '/registro') {
-        console.log('Fetching URL:', url);
+        console.log('Fetching URL:', window.location.origin + url);
         fetch(url, {
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
@@ -14,11 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
         })
         .then(response => {
-            if (!response.ok) {
-                return response.text().then(text => {
-                    throw new Error(`HTTP ${response.status}: ${text}`);
-                });
-            }
+            if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             return response.json();
         })
         .then(data => {
@@ -37,12 +33,14 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.pagination a').forEach(link => {
                 link.addEventListener('click', e => {
                     e.preventDefault();
-                    updateTable(link.href);
+                    const href = new URL(link.href);
+                    const relativeUrl = href.pathname + href.search;
+                    updateTable(relativeUrl);
                 });
             });
         })
         .catch(error => {
-            console.error('Error fetching logs:', error.message);
+            console.error('Error:', error.message);
             tableBody.innerHTML = '<tr><td colspan="5" class="empty">Error al cargar los registros: ' + error.message + '</td></tr>';
         });
     }
