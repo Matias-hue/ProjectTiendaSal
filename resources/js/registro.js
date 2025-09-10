@@ -6,11 +6,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const pagination = document.querySelector('.pagination');
 
     function updateTable(url = '/registro') {
+        console.log('Fetching URL:', url);
         fetch(url, {
-            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+            },
         })
         .then(response => {
-            if (!response.ok) throw new Error('Error al cargar los registros');
+            if (!response.ok) {
+                return response.text().then(text => {
+                    throw new Error(`HTTP ${response.status}: ${text}`);
+                });
+            }
             return response.json();
         })
         .then(data => {
@@ -34,8 +42,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         })
         .catch(error => {
-            console.error('Error:', error);
-            tableBody.innerHTML = '<tr><td colspan="5" class="empty">Error al cargar los registros.</td></tr>';
+            console.error('Error fetching logs:', error.message);
+            tableBody.innerHTML = '<tr><td colspan="5" class="empty">Error al cargar los registros: ' + error.message + '</td></tr>';
         });
     }
 
@@ -47,5 +55,5 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 300);
     });
 
-    updateTable();
+    updateTable(); 
 });
