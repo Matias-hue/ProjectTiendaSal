@@ -100,6 +100,11 @@ class OrderController extends Controller
             }
 
             DB::commit();
+
+            if ($request->has('is_admin')) {
+                return redirect()->route('pedidos.index')->with('success', 'Pedido creado con éxito.');
+            }
+
             return response()->json(['success' => 'Pedido creado correctamente.']);
         } catch (\Exception $e) {
             DB::rollBack();

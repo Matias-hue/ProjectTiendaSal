@@ -20,6 +20,7 @@
                 @endif
                 <form id="create-order-form" method="POST" action="{{ route('pedidos.store') }}">
                     @csrf
+                    <input type="hidden" name="is_admin" value="1">
                     <div class="input-search-registro">
                         <label for="user_search">Usuario</label>
                         <input type="text" id="user_search" name="user_search" placeholder="Buscar usuario por nombre o email..." autocomplete="off">
