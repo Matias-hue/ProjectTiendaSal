@@ -168,6 +168,7 @@ class OrderController extends Controller
 
     public function complete($id)
     {
+        \Log::debug("Intentando completar pedido ID: {$id}");
         try {
             $order = Order::findOrFail($id);
             if ($order->status !== 'Pendiente') {
@@ -180,17 +181,21 @@ class OrderController extends Controller
                 Mail::to($order->user->email)->send(new OrderStatusUpdated($order));
             }
 
+            \Log::info("Pedido completado ID: {$id}");
             return response()->json(['success' => 'Pedido marcado como completado.', 'status' => 'Completado']);
         } catch (\Exception $e) {
+            \Log::error("Error al completar pedido ID: {$id}, Error: {$e->getMessage()}");
             return response()->json(['error' => 'Error al completar el pedido: ' . $e->getMessage()], 500);
         }
     }
 
     public function cancel($id)
     {
+        \Log::debug("Intentando cancelar pedido ID: {$id}");
         try {
             $order = Order::with('items.product')->findOrFail($id);
             if ($order->status !== 'Pendiente') {
+                \Log::warning("Intento de cancelar pedido no pendiente ID: {$id}, Estado: {$order->status}");
                 return response()->json(['error' => 'Solo se pueden cancelar pedidos pendientes.'], 400);
             }
 
@@ -211,8 +216,10 @@ class OrderController extends Controller
                 Mail::to($order->user->email)->send(new OrderStatusUpdated($order));
             }
 
+            \Log::info("Pedido cancelado ID: {$id}");
             return response()->json(['success' => 'Pedido cancelado correctamente.', 'status' => 'Cancelado']);
         } catch (\Exception $e) {
+            \Log::error("Error al cancelar pedido ID: {$id}, Error: {$e->getMessage()}");
             return response()->json(['error' => 'Error al cancelar el pedido: ' . $e->getMessage()], 500);
         }
     }

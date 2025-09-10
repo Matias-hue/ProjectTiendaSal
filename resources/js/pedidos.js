@@ -231,9 +231,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function bindActionButtons() {
+        console.log('Vinculando botones de acción');
         const completeButtons = document.querySelectorAll('.btn-completar');
         const cancelButtons = document.querySelectorAll('.btn-cancelar');
         const detailsButtons = document.querySelectorAll('.btn-detalles');
+        console.log('Botones Completar:', completeButtons.length); 
+        console.log('Botones Cancelar:', cancelButtons.length);
 
         completeButtons.forEach(button => {
             button.removeEventListener('click', handleComplete);
@@ -255,6 +258,8 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         currentOrderId = this.getAttribute('data-id');
         currentRow = this.closest('tr');
+        console.log('Botón Completar clicado, ID:', currentOrderId); 
+        console.log('Dialog Completar:', dialogCompletar);
         if (dialogCompletar) dialogCompletar.showModal();
     }
 
@@ -262,6 +267,8 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         currentOrderId = this.getAttribute('data-id');
         currentRow = this.closest('tr');
+        console.log('Botón Cancelar clicado, ID:', currentOrderId); 
+        console.log('Dialog Cancelar:', dialogCancelar);
         if (dialogCancelar) dialogCancelar.showModal();
     }
 
@@ -277,6 +284,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (btnConfirmarCompletar) {
         btnConfirmarCompletar.addEventListener('click', function () {
+            console.log('Confirmar Completar clicado, ID:', currentOrderId);
             btnConfirmarCompletar.disabled = true;
             btnConfirmarCompletar.textContent = 'Procesando...';
 
@@ -297,6 +305,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(data => {
+                console.log('Datos Completar:', data);
                 if (data.success) {
                     const statusCell = currentRow?.querySelector('.status-cell');
                     const actionCell = currentRow?.querySelector('.action-cell');
@@ -310,6 +319,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(error => {
+                console.error('Error Completar:', error);
                 console.error('Error:', error);
                 mostrarError('Hubo un problema: ' + error.message);
             })
@@ -322,6 +332,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (btnConfirmarCancelar) {
         btnConfirmarCancelar.addEventListener('click', function () {
+            console.log('Confirmar Cancelar clicado, ID:', currentOrderId);
             btnConfirmarCancelar.disabled = true;
             btnConfirmarCancelar.textContent = 'Procesando...';
 
@@ -334,6 +345,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
             })
             .then(response => {
+                console.log('Respuesta Cancelar:', response.status, response);
                 if (!response.ok) {
                     return response.text().then(text => {
                         throw new Error(`Error HTTP: ${response.status} - ${text}`);
@@ -342,6 +354,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(data => {
+                console.log('Datos Cancelar:', data);
                 if (data.success) {
                     const statusCell = currentRow?.querySelector('.status-cell');
                     const actionCell = currentRow?.querySelector('.action-cell');
@@ -355,6 +368,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(error => {
+                console.error('Error Cancelar:', error);
                 console.error('Error:', error);
                 mostrarError('Hubo un problema al cancelar el pedido: ' + error.message);
             })
