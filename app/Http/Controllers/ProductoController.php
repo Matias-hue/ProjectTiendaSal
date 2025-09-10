@@ -12,7 +12,7 @@ class ProductoController extends Controller
 
     public function index()
     {
-        $productos = Producto::all();
+        $productos = Producto::orderBy('id', 'asc')->get();
         return view('inventario', compact('productos')); 
     }
 
