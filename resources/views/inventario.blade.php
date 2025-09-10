@@ -42,7 +42,6 @@
                                     <button class="btn-eliminar-tabla" 
                                             data-id="{{ $producto->id }}"
                                             data-nombre="{{ $producto->nombre }}">
-                                            >
                                         {{ __('Eliminar') }}
                                     </button>
                                 </td>
