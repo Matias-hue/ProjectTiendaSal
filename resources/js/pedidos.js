@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     console.log('JavaScript de Pedidos cargado');
-
+    
     const dialogCompletar = document.getElementById('dialog-completar');
     const dialogCancelar = document.getElementById('dialog-cancelar');
     const dialogError = document.getElementById('dialog-error');
