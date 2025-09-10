@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     console.log('JavaScript de Pedidos cargado');
-    
+
     const dialogCompletar = document.getElementById('dialog-completar');
     const dialogCancelar = document.getElementById('dialog-cancelar');
     const dialogError = document.getElementById('dialog-error');
@@ -169,6 +169,60 @@ document.addEventListener('DOMContentLoaded', function () {
         updateTable(url);
     }
 
+    // Delegación de eventos para botones dinámicos
+        document.querySelector('#pedidos-table tbody').addEventListener('click', function (e) {
+        console.log('Clic detectado en tbody');
+        console.log('Objetivo:', e.target.tagName, e.target.classList, e.target.getAttribute('data-id'));
+        console.log('Contiene btn-completar:', e.target.classList.contains('btn-completar'));
+        console.log('Contiene btn-cancelar:', e.target.classList.contains('btn-cancelar'));
+        console.log('Contiene btn-detalles:', e.target.classList.contains('btn-detalles'));
+
+        if (e.target.classList.contains('btn-completar')) {
+            e.preventDefault();
+            currentOrderId = e.target.getAttribute('data-id');
+            currentRow = e.target.closest('tr');
+            console.log('Botón Completar clicado, ID:', currentOrderId);
+            console.log('Dialog Completar:', dialogCompletar);
+            if (dialogCompletar) {
+                try {
+                    dialogCompletar.showModal();
+                } catch (error) {
+                    console.error('Error al abrir dialog-completar:', error);
+                    mostrarError('Error al abrir el modal de confirmación: ' + error.message);
+                }
+            } else {
+                console.error('Modal dialog-completar no encontrado');
+                mostrarError('El modal de confirmación no está disponible.');
+            }
+        } else if (e.target.classList.contains('btn-cancelar')) {
+            e.preventDefault();
+            currentOrderId = e.target.getAttribute('data-id');
+            currentRow = e.target.closest('tr');
+            console.log('Botón Cancelar clicado, ID:', currentOrderId);
+            console.log('Dialog Cancelar:', dialogCancelar);
+            if (dialogCancelar) {
+                try {
+                    dialogCancelar.showModal();
+                } catch (error) {
+                    console.error('Error al abrir dialog-cancelar:', error);
+                    mostrarError('Error al abrir el modal de cancelación: ' + error.message);
+                }
+            } else {
+                console.error('Modal dialog-cancelar no encontrado');
+                mostrarError('El modal de cancelación no está disponible.');
+            }
+        } else if (e.target.classList.contains('btn-detalles')) {
+            e.preventDefault();
+            const pedidoId = e.target.getAttribute('data-id');
+            console.log('Botón Detalles clicado, ID:', pedidoId);
+            if (pedidoId) {
+                showDetails(pedidoId);
+            } else {
+                mostrarError('ID del pedido no encontrado.');
+            }
+        }
+    });
+
     function updateTable(url) {
         console.log('Fetching URL:', url);
         fetch(url, {
@@ -214,7 +268,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             pagination.innerHTML = data.links;
             bindPaginationLinks();
-            bindActionButtons();
         })
         .catch(error => {
             console.error('Error fetching orders:', error);
