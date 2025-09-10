@@ -17,7 +17,15 @@ class ActivityLogController extends Controller
                 });
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(10)
+            ->appends(['search' => $search]);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'data' => $logs->items(),
+                'links' => $logs->links()->toHtml(),
+            ]);
+        }
 
         return view('registro', compact('logs', 'search'));
     }
